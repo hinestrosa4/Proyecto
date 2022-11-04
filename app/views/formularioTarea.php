@@ -7,26 +7,34 @@
     <title>Document</title>
 </head>
 <body>
+    
     <form method="post" action="../controllers/validarFormTarea.php">
 
-    <label>NIF o CIF</label> <input type="text" name="textNif"><br><br>
+    <label>NIF o CIF</label> <input type="text" name="textNif" value="<?=ValorPost('textNif')?>"><br>
+    <?=VerError('nif')?><br><br>
 
-    <label>Persona de Contacto</label><br><br>
-    <label>Nombre</label> <input type="text" name="textNombre"><br><br>
-    <label>Apellidos</label> <input type="text" name="textApellidos"><br><br>
+    <label><strong>Persona de Contacto</strong></label><br>
+    <label>Nombre</label> <input type="text" name="textNombre" value="<?=ValorPost('textNombre')?>"><br>
+    <?=VerError('nombre')?><br><br>
+    <label>Apellidos</label> <input type="text" name="textApellidos" value="<?=ValorPost('textApellidos')?>"><br>
+    <?=VerError('apellidos')?><br><br><br>
 
-    <label>Nº de teléfono</label> <input type="text" name="textTelefono"><br><br>
+    <label>Nº de teléfono</label> <input type="text" name="textTelefono" value="<?=ValorPost('textTelefono')?>"><br>
+    <?=VerError('telefono')?><br><br>
 
-    <label>Descripción</label><br><br>
-    <textarea name="textDescripcion" id="descripcion" cols="40" rows="10"></textarea><br><br>
-    
-    <label>Correo electrónico</label> <input type="text" name="textCorreo"><br><br>
+    <label>Descripción</label><br>
+    <textarea name="textDescripcion" id="descripcion" cols="40" rows="10"><?=ValorPost('textDescripcion')?></textarea><br>
+    <?=VerError('descripcion')?><br><br>
+
+    <label>Correo electrónico</label> <input type="text" name="textCorreo" value="<?=ValorPost('textCorreo')?>"><br>
+    <?=VerError('correo')?><br><br>
 
     <label>Dirección</label> <input type="text" name="textDireccion"><br><br>
 
     <label>Población</label> <input type="text" name="textPoblacion"><br><br>
 
-    <label>Codigo postal</label> <input type="text" name="textCp"><br><br>
+    <label>Codigo postal</label> <input type="text" name="textCp" value="<?=ValorPost('textCp')?>"><br>
+    <?=VerError('cp')?><br><br>
 
     <label>Provincia</label> <select name="selectProvincia" id="provincias">
         <option value="21">Huelva</option>
@@ -47,11 +55,13 @@
         <option value="c">Cancelada</option>
     </select><br><br>
 
-    <label>Fecha de creación</label> <input type="date" name="fechaCreacion"><br><br>
+    <label>Fecha de creación</label> <input readonly type="date" name="fechaCreacion" value="<?= $fechaActual ?>"><br>
+    
 
     <label>Operario encargado</label> <select name="selectOperario" id="operarios"></select><br><br>
     
-    <label>Fecha de realización</label> <input type="date" name="fechaRealizacion"><br><br>
+    <label>Fecha de realización</label> <input type="date" name="fechaRealizacion" value="<?=ValorPost('fechaRealizacion')?>"><br>
+    <?=VerError('fechaRealizacion')?><br><br>
 
     <label>Anotaciones anteriores</label><br><textarea name="anotacionesAnt" id="anotaciones1" cols="40" rows="10"></textarea><br><br>
     
