@@ -1,6 +1,11 @@
 <?php
 
 include "utilsFormulario.php";
+include "../models/BD.php";
+//include '../controllers/queryProvincia.php';
+$a = BD::getInstance();
+
+/*include "../models/consulta.php";*/
 
 $hayError=FALSE;
 $errores=[];
