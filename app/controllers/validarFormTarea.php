@@ -4,8 +4,17 @@ include "utilsFormulario.php";
 include "../models/BD.php";
 //include '../controllers/queryProvincia.php';
 $a = BD::getInstance();
+include "../libraries/creaSelect.php";
+include "../models/Provincia.php";
+include "../models/Usuario.php";
 
-/*include "../models/consulta.php";*/
+//Librerias
+include "../libraries/validarDNI.php";
+include "../libraries/validarTelefono.php";
+include "../libraries/validarCodigoPostal.php";
+include "../libraries/validarCorreo.php";
+include "../libraries/validarFechaRealizacion.php";
+include "../libraries/validarCIF.php";
 
 $hayError=FALSE;
 $errores=[];
@@ -39,7 +48,7 @@ if (empty($descripcion)) {
 /*Validar CIF o NIF*/
 $dni = $_POST['textNif'];
 
-if (empty($dni) || !validarDni($dni)) {
+if (empty($dni) || !validarDni($dni) && !cifValido($dni)) {
     $errores['nif']= 'NIF o CIF debe ser correcto';
 	$hayError=TRUE;
 }
@@ -78,64 +87,5 @@ if (empty($fechaRealizacion) || !validarFechaRealizacion($fechaRealizacion)) {
 
 if($hayError){
     include "../views/formularioTarea.php";
-}else{
-    //Enviar a base de datos
 }
-}
-
-/*Funciones*/
-function validarDni($dni)
-{
-    $lista = "TRWAGMYFPDXBNJZSQVHLCKE";
-
-    if (strlen(substr($dni, 0, -1)) == 8 && is_numeric(substr($dni, 0, -1))) {
-        $resultado = (int)substr($dni, 0, -1) % 23;
-        $letraAsign = str_split($lista)[$resultado];
-        if (substr($dni, -1) == $letraAsign) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-}
-
-function validarTelefono($tel)
-{
-    $a = "^(?:(?:\+?[0-9]{2,4})?[ ]?[6789][0-9 ]{8,13})$";
-    if (preg_match("/$a/", $tel)) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-function validarCodigoPostal($cp)
-{
-    $a = "^(?:0[1-9]\d{3}|[1-4]\d{4}|5[0-2]\d{3})$";
-    if (preg_match("/$a/", $cp)) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-function validarCorreo($correo)
-{
-    $a = "^[^0-9][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$";
-    if (preg_match("/$a/", $correo)) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-function validarFechaRealizacion($fecha)
-{
-    $fecha = new DateTime($fecha);
-    $hoy = new DateTime();
-    if ($fecha <= $hoy) {
-        return false;
-    } else {
-        return true;
-    }
 }

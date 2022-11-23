@@ -36,36 +36,35 @@ class BD
         $usuario = 'root';
         $password = '';
 
-        try {
+        
             $this->pdo = new PDO($dsn, $usuario, $password);
-        } catch (PDOException $e) {
+         /*catch (PDOException $e) {
             echo 'Falló la conexión: ' . $e->getMessage();
-        }
+        }*/
     }
 
-    public function getProv()
+    function getListaSelect($tabla, $c_idx, $c_value, $condicion="")
     {
-        $prov = array();
-
-        $this->stmt = $this->pdo->prepare('SELECT codPoblacion,nombre FROM poblacion');
+        $this->stmt = $this->pdo->prepare('SELECT ' . $c_idx . ',' . $c_value . ' FROM ' . $tabla . " " . $condicion);
         $this->stmt->execute();
-        
-        while ($row =  $this->stmt->fetch(PDO::FETCH_ASSOC)) {
-            $prov[$row['codPoblacion']] = $row['nombre'];
+
+        $lista = array();
+        while ($row = $this->stmt->fetch(PDO::FETCH_ASSOC)) {
+            $lista[$row[$c_idx]] = $row[$c_value];
         }
-        return $prov;
+        return $lista;
     }
 
-    public function getOperarios()
+
+    function intoValues(){
+        
+    }
+    /*function intoValues($nif,$nombre,$apellidos,$clave,$correo,$direccion,$telefono,$isAdmin)
     {
-        $ops = array();
-
-        $this->stmt = $this->pdo->prepare('SELECT nombre, apellidos FROM usuario WHERE isAdmin=0');
-        $this->stmt->execute();
-        
-        while ($row =  $this->stmt->fetch(PDO::FETCH_ASSOC)) {
-            $ops[$row['nombre']] = $row['apellidos'];
-        }
-        return $ops;
-    }
+        $sql = "INSERT INTO tareas (cod_tarea,nif_cif,nombre,telefono,descripcion,correo,direccion,poblacion,codigoPostal,
+        provincia,estado,fechaCreacion,operarioEncargado,fechaRealizacion,anotacionesAnt,anotacionesPos)
+        VALUES($nif,$nombre,$apellidos,$clave,$correo,$direccion,$telefono,$isAdmin)";
+    $resultado = $this->db->prepare($sql);
+    $resultado->execute(array());
+    }*/
 }

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Proyecto Rafael Hinestrosa</title>
 </head>
 
 <body>
@@ -40,19 +40,11 @@
 
         <label>Provincia</label>
 
-        <select name="selectProvincia" id="provincias">
-            <?php
-            $prov = $a->getProv();
-            foreach ($prov as $item => $value) {
-            ?>
-                <option value="<?php echo $item ?>"><?php echo $value ?></option>
-            <?php
-            }
-            ?>
-        </select><br><br>
+        <?= CreaSelect('selectProvincia', Provincia::listaSelect(), filter_input(INPUT_POST, 'prov')) ?>
+        <br><br>
 
         <label>Estado</label> <select name="selectEstado" id="estados">
-            <option value="0">Elija el estado de la tarea</option>
+            <option value="0" hidden>Elija el estado de la tarea</option>
             <option value="b">Esperando ser aprobada</option>
             <option value="p">Pendiente</option>
             <option value="r">Realizada</option>
@@ -62,16 +54,9 @@
         <label>Fecha de creación</label> <input readonly type="date" name="fechaCreacion" value="<?= $fechaActual ?>"><br>
 
 
-        <label>Operario encargado</label> <select name="selectOperario" id="operarios">
-        <?php
-            $ops = $a->getOperarios();
-            foreach ($ops as $item => $value) {
-            ?>
-                <option value="<?php echo $value ?>"><?php echo $value.", ". $item ?></option>
-            <?php
-            }
-            ?>
-        </select><br><br>
+        <label>Operario encargado</label>
+        <?= CreaSelect('selectOperario', Usuario::listaSelect(), filter_input(INPUT_POST, 'prov')) ?>
+        <br><br>
 
         <label>Fecha de realización</label> <input type="date" name="fechaRealizacion" value="<?= ValorPost('fechaRealizacion') ?>"><br>
         <?= VerError('fechaRealizacion') ?><br><br>
