@@ -14,6 +14,6 @@ class Provincia
 
     static function listaSelect()
     {
-        return BD::getInstance()->getListaSelect('poblacion', 'codPoblacion', 'nombre');
+        return BD::getInstance()->getListaSelect('provincias', 'codPoblacion', 'nombre');
     }
 }

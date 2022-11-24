@@ -32,7 +32,7 @@ class BD
     public function conectar()
     {
         /* Conectar a una base de datos de MySQL invocando al controlador */
-        $dsn = 'mysql:dbname=bddempresa;host=localhost';
+        $dsn = 'mysql:dbname=bdproyecto;host=localhost';
         $usuario = 'root';
         $password = '';
 
@@ -55,16 +55,62 @@ class BD
         return $lista;
     }
 
+    function catchTarea(){
+        /*$nif_cif = $_POST["textNif"];
+        $nombre = $_POST["textNombre"];
+        $apellidos = $_POST["textApellidos"];
+        $telefono = $_POST["textTelefono"];
+        $descripcion = $_POST["textDescripcion"];
+        $correo = $_POST["textCorreo"];
+        $direccion = $_POST["textDireccion"];
+        $poblacion = $_POST["textPoblacion"];
+        $codigo_postal = $_POST["textCp"];
+        $provincia = $_POST["selectProvincia"];
+        $estado = $_POST["selectEstado"];
+        $fecha_creacion = $_POST["fechaCreacion"];
+        $operario_encargado = $_POST["selectOperario"];
+        $fecha_realizacion = $_POST["fechaRealizacion"];
+        $anotaciones_ant = $_POST["anotacionesAnt"];
+        $anotaciones_pos = $_POST["anotacionesPos"];*/
 
-    function intoValues(){
+        $todocampos = $_POST;
+        $campos = "";
+        $names = "";
+        
+        foreach ($todocampos as $nam=>$camp) {
+            $campos  .= $camp . ',';
+            $names .= $nam . ',';
+        }
+
+        $campos2 = substr($campos, 0, -1);
+        $names2 = substr($names, 0, -1);
+        $a_campos = explode(",", $campos2);
+        //echo $names2;
+        echo "<br>";
+        echo "<br>";
+
+        include "Tarea.php";
+
+        Tarea::addTarea($a_campos,$names2);
+
+        echo "<a href='procesar_form.php'>Volver al formulario</a>";
         
     }
-    /*function intoValues($nif,$nombre,$apellidos,$clave,$correo,$direccion,$telefono,$isAdmin)
-    {
-        $sql = "INSERT INTO tareas (cod_tarea,nif_cif,nombre,telefono,descripcion,correo,direccion,poblacion,codigoPostal,
-        provincia,estado,fechaCreacion,operarioEncargado,fechaRealizacion,anotacionesAnt,anotacionesPos)
-        VALUES($nif,$nombre,$apellidos,$clave,$correo,$direccion,$telefono,$isAdmin)";
-    $resultado = $this->db->prepare($sql);
-    $resultado->execute(array());
-    }*/
+
+    function insertarCampos($tabla, $listaValues, $campos){//Función genérica insertar en bases de datos
+
+        $cadena = '';
+        foreach($campos AS $id=>$valor){
+            $cadena .= "'" . $valor . "'";
+            if($id < (count($campos) - 1)){
+                $cadena .= ",";
+            }
+            //echo $cadena . " " . $id . "<br>";
+        }
+        
+        $sql = "INSERT INTO " . $tabla . "(" . $listaValues . ") VALUES(" . $cadena . ")"; 
+    
+        $resultado = $this->pdo->prepare($sql);
+        $resultado->execute(array());
+    }
 }

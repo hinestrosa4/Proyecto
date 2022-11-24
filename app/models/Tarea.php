@@ -6,9 +6,9 @@ class Tarea
     private function __construct()
     {
     }
-
-    static function listaSelect()
+    
+    static function addTarea($campos, $names)
     {
-        return BD::getInstance()->intoValues();
+        return BD::getInstance()->insertarCampos('tareas', $names, $campos);
     }
 }

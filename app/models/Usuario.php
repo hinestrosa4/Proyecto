@@ -14,6 +14,6 @@ class Usuario
 
     static function listaSelect()
     {
-        return BD::getInstance()->getListaSelect('usuario', 'nif', 'nombre', 'WHERE isAdmin = 0');
+        return BD::getInstance()->getListaSelect('usuarios', 'nif', 'nombre', 'WHERE isAdmin = 0');
     }
 }
