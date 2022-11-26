@@ -6,71 +6,119 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyecto Rafael Hinestrosa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="../../assets/css/style.css" rel="stylesheet">
 </head>
 
 <body>
 
-    <form method="post" action="../controllers/validarFormTarea.php">
+    <form class="row g-3 needs-validation" method="post" action="../controllers/validarFormTarea.php" enctype="multipart/form-data">
+    
+    <div class="col-md-3">
+        <label class="form-label">NIF o CIF</label>
+        <input class="form-control" type="text" name="nif_cif" value="<?= ValorPost('nif_cif') ?>">
+        <?= VerError('nif_cif') ?>
+        </div>
 
-        <label>NIF o CIF</label> <input type="text" name="nif_cif" value="<?= ValorPost('nif_cif') ?>"><br>
-        <?= VerError('nif_cif') ?><br><br>
+        <div class="col-md-3">
+        <label class="form-label">Nombre</label>
+        <input class="form-control" type="text" name="nombre" value="<?= ValorPost('nombre') ?>">
+        <?= VerError('nombre') ?>
+        </div>
+        <div class="col-md-3">
+        <label class="form-label">Apellidos</label>
+        <input class="form-control" type="text" name="apellidos" value="<?= ValorPost('apellidos') ?>">
+        <?= VerError('apellidos') ?>
+        </div>
 
-        <label><strong>Persona de Contacto</strong></label><br>
-        <label>Nombre</label> <input type="text" name="nombre" value="<?= ValorPost('nombre') ?>"><br>
-        <?= VerError('nombre') ?><br><br>
-        <label>Apellidos</label> <input type="text" name="apellidos" value="<?= ValorPost('apellidos') ?>"><br>
-        <?= VerError('apellidos') ?><br><br><br>
+        <div class="col-md-3">
+        <label class="form-label">Nº de teléfono</label>
+        <input class="form-control" type="text" name="telefono" value="<?= ValorPost('telefono') ?>">
+        <?= VerError('telefono') ?>
+        </div>
 
-        <label>Nº de teléfono</label> <input type="text" name="telefono" value="<?= ValorPost('telefono') ?>"><br>
-        <?= VerError('telefono') ?><br><br>
+        <div class="col-md-3">
+        <label class="form-label">Descripción</label>
+        <textarea class="form-control" placeholder="Escriba la descipción..." name="descripcion" id="descripcion" cols="40" rows="4"><?= ValorPost('descripcion') ?></textarea>
+        <?= VerError('descripcion') ?>
+        </div>
 
-        <label>Descripción</label><br>
-        <textarea name="descripcion" id="descripcion" cols="40" rows="10"><?= ValorPost('descripcion') ?></textarea><br>
-        <?= VerError('descripcion') ?><br><br>
+        <div class="col-md-3">
+        <label class="form-label">Correo electrónico</label>
+        <input class="form-control" type="text" name="correo" value="<?= ValorPost('correo') ?>">
+        <?= VerError('correo') ?><br>
+        </div>
 
-        <label>Correo electrónico</label> <input type="text" name="correo" value="<?= ValorPost('correo') ?>"><br>
-        <?= VerError('correo') ?><br><br>
+        <div class="col-md-3">
+        <label class="form-label">Dirección</label>
+        <input class="form-control" type="text" name="direccion" value="<?= ValorPost('direccion') ?>">
+        </div>
 
-        <label>Dirección</label> <input type="text" name="direccion" value="<?= ValorPost('direccion') ?>"><br><br>
+        <div class="col-md-3">
+        <label class="form-label">Población</label>
+        <input class="form-control" type="text" name="poblacion" value="<?= ValorPost('poblacion') ?>">
+        </div>
 
-        <label>Población</label> <input type="text" name="poblacion" value="<?= ValorPost('poblacion') ?>"><br><br>
+        <div class="col-md-3">
+        <label class="form-label">Codigo postal</label>
+        <input class="form-control" type="text" name="codigo_postal" value="<?= ValorPost('codigo_postal') ?>">
+        <?= VerError('codigo_postal') ?>
+        </div>
 
-        <label>Codigo postal</label> <input type="text" name="codigo_postal" value="<?= ValorPost('codigo_postal') ?>"><br>
-        <?= VerError('codigo_postal') ?><br><br>
-
-        <label>Provincia</label>
-
+        <div class="col-md-3">
+        <label class="form-label">Provincia</label>
         <?= CreaSelect('provincia', Provincia::listaSelect(), filter_input(INPUT_POST, 'prov')) ?>
-        <br><br>
+        </div>
 
-        <label>Estado</label>
-        <select name="estado" id="estados">
-            <option value="0" hidden>Elija el estado de la tarea</option>
+        <div class="col-md-3">
+        <label class="form-label">Estado</label>
+        <select class="form-select" name="estado" id="estados">
             <option value="b">Esperando ser aprobada</option>
             <option value="p">Pendiente</option>
             <option value="r">Realizada</option>
             <option value="c">Cancelada</option>
-        </select><br><br>
+        </select>
+        </div>
 
-        <label>Fecha de creación</label> <input readonly type="date" name="fecha_creacion" value="<?= $fechaActual ?>"><br>
+        <div class="col-md-3">
+        <label>Fecha de creación</label>
+        <input class="form-control" readonly type="date" name="fecha_creacion" value="<?= $fechaActual ?>">
+        </div>
 
-
+        <div class="col-md-3">
         <label>Operario encargado</label>
         <?= CreaSelect('operario_encargado', Usuario::listaSelect(), filter_input(INPUT_POST, 'prov')) ?>
-        <br><br>
+        </div>
 
-        <label>Fecha de realización</label> <input type="date" name="fecha_realizacion" value="<?= ValorPost('fecha_realizacion') ?>"><br>
-        <?= VerError('fecha_realizacion') ?><br><br>
+        <div class="col-md-3">
+        <label>Fecha de realización</label>
+        <input class="form-control" type="date" name="fecha_realizacion" value="<?= ValorPost('fecha_realizacion') ?>">
+        <?= VerError('fecha_realizacion') ?>
+        </div>
 
-        <label>Anotaciones anteriores</label><br><textarea name="anotaciones_ant" id="anotaciones1" cols="40" rows="10"><?= ValorPost('anotaciones_ant') ?></textarea><br><br>
+        <div class="col-md-3">
+        <label>Anotaciones anteriores</label>
+        <textarea class="form-control" placeholder="Escriba sus anotaciones..." name="anotaciones_ant" id="anotaciones1" cols="10" rows="4"><?= ValorPost('anotaciones_ant') ?></textarea>
+        </div>
 
-        <label>Anotaciones posteriores</label><br><textarea name="anotaciones_pos" id="anotaciones2" cols="40" rows="10"><?= ValorPost('anotaciones_pos') ?></textarea><br><br>
+        <div class="col-md-3">
+        <label>Anotaciones posteriores</label>
+        <textarea class="form-control" placeholder="Escriba sus anotaciones..." name="anotaciones_pos" id="anotaciones2" cols="10" rows="4"><?= ValorPost('anotaciones_pos') ?></textarea>
+        </div>
 
-        <label>Fichero resumen</label><br><input type="file" name=""><br><br>
+        <div class="col-md-3">
+        <label>Fichero resumen</label>
+        <input class="form-control" name="fichero_resumen" type="file">
+        </div>
 
-        <label>Fotos del trabajo realizado</label><br><input type="file" name=""><br><br>
+        <div class="col-md-3">
+        <label>Fotos del trabajo realizado</label>
+        <input class="form-control" name="foto_trabajo" type="file">
+        </div>
 
-        <button type="submit" name="">Enviar</button>
+        <div class="col-md-3" id="buttonE">
+        <button class="btn btn-primary" type="submit" name="">Enviar</button>
+        </div>
     </form>
 </body>
 

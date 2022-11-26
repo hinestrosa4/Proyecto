@@ -11,7 +11,6 @@ class BD
     private function __construct()
     {
         $this->conectar();
-        
     }
 
     /*Evitamos el clonaje del objeto. Patrón Singleton*/
@@ -36,14 +35,10 @@ class BD
         $usuario = 'root';
         $password = '';
 
-        
-            $this->pdo = new PDO($dsn, $usuario, $password);
-         /*catch (PDOException $e) {
-            echo 'Falló la conexión: ' . $e->getMessage();
-        }*/
+        $this->pdo = new PDO($dsn, $usuario, $password);
     }
 
-    function getListaSelect($tabla, $c_idx, $c_value, $condicion="")
+    function getListaSelect($tabla, $c_idx, $c_value, $condicion = "")
     {
         $this->stmt = $this->pdo->prepare('SELECT ' . $c_idx . ',' . $c_value . ' FROM ' . $tabla . " " . $condicion);
         $this->stmt->execute();
@@ -55,29 +50,26 @@ class BD
         return $lista;
     }
 
-    function catchTarea(){
-        /*$nif_cif = $_POST["textNif"];
-        $nombre = $_POST["textNombre"];
-        $apellidos = $_POST["textApellidos"];
-        $telefono = $_POST["textTelefono"];
-        $descripcion = $_POST["textDescripcion"];
-        $correo = $_POST["textCorreo"];
-        $direccion = $_POST["textDireccion"];
-        $poblacion = $_POST["textPoblacion"];
-        $codigo_postal = $_POST["textCp"];
-        $provincia = $_POST["selectProvincia"];
-        $estado = $_POST["selectEstado"];
-        $fecha_creacion = $_POST["fechaCreacion"];
-        $operario_encargado = $_POST["selectOperario"];
-        $fecha_realizacion = $_POST["fechaRealizacion"];
-        $anotaciones_ant = $_POST["anotacionesAnt"];
-        $anotaciones_pos = $_POST["anotacionesPos"];*/
-
+    function catchTarea()
+    {
         $todocampos = $_POST;
+
+        if ($_FILES["fichero_resumen"]['name'] == "")
+            $todocampos["fichero_resumen"] = "";
+        else
+            $todocampos["fichero_resumen"] = "app/files/Tarea_" . $this->getCodTarea()[0] + 1 . "-" .  $_FILES["fichero_resumen"]['name'];
+
+        if ($_FILES["foto_trabajo"]['name'] == "")
+            $todocampos["foto_trabajo"] = "";
+        else
+            $todocampos["foto_trabajo"] = "app/files/Tarea_" . $this->getCodTarea()[0] + 1 . "-" .  $_FILES["foto_trabajo"]['name'];
+
+var_dump($todocampos);
+
         $campos = "";
         $names = "";
-        
-        foreach ($todocampos as $nam=>$camp) {
+
+        foreach ($todocampos as $nam => $camp) {
             $campos  .= $camp . ',';
             $names .= $nam . ',';
         }
@@ -85,32 +77,34 @@ class BD
         $campos2 = substr($campos, 0, -1);
         $names2 = substr($names, 0, -1);
         $a_campos = explode(",", $campos2);
-        //echo $names2;
-        echo "<br>";
-        echo "<br>";
 
         include "Tarea.php";
 
-        Tarea::addTarea($a_campos,$names2);
+        Tarea::addTarea($a_campos, $names2);
 
         echo "<a href='procesar_form.php'>Volver al formulario</a>";
-        
     }
 
-    function insertarCampos($tabla, $listaValues, $campos){//Función genérica insertar en bases de datos
+    function insertarCampos($tabla, $listaValues, $campos)
+    { //Función genérica insertar en bases de datos
 
         $cadena = '';
-        foreach($campos AS $id=>$valor){
+        foreach ($campos as $id => $valor) {
             $cadena .= "'" . $valor . "'";
-            if($id < (count($campos) - 1)){
+            if ($id < (count($campos) - 1)) {
                 $cadena .= ",";
             }
-            //echo $cadena . " " . $id . "<br>";
         }
-        
-        $sql = "INSERT INTO " . $tabla . "(" . $listaValues . ") VALUES(" . $cadena . ")"; 
-    
+
+        $sql = "INSERT INTO " . $tabla . "(" . $listaValues . ") VALUES(" . $cadena . ")";
+
         $resultado = $this->pdo->prepare($sql);
         $resultado->execute(array());
+    }
+
+    function getCodTarea()
+    {
+        $stmt = $this->pdo->query("SELECT id FROM tareas GROUP BY id desc limit 1");
+        return $stmt->fetch();
     }
 }

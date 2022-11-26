@@ -3,7 +3,7 @@
 include "utilsFormulario.php";
 include "../models/BD.php";
 //include '../controllers/queryProvincia.php';
-$a = BD::getInstance();
+$bd = BD::getInstance();
 include "../libraries/creaSelect.php";
 include "../models/Provincia.php";
 include "../models/Usuario.php";
@@ -15,6 +15,7 @@ include "../libraries/validarCodigoPostal.php";
 include "../libraries/validarCorreo.php";
 include "../libraries/validarFechaRealizacion.php";
 include "../libraries/validarCIF.php";
+include "../libraries/uploadFile.php";
 
 $hayError = FALSE;
 $errores = [];
@@ -23,7 +24,7 @@ $fechaActual = date('Y-m-d');
 if (!$_POST) { // Si no han enviado el fomulario
     include '../views/formularioTarea.php';
 } else {
-    
+
     /*Validar Descripcion y Persona de contacto*/
     $nombre = $_POST['nombre'];
     $apellidos = $_POST['apellidos'];
@@ -80,9 +81,15 @@ if (!$_POST) { // Si no han enviado el fomulario
         $hayError = TRUE;
     }
 
+    /*Validar Fichero Resumen*/
+    uploadFile("fichero_resumen",$bd->getCodTarea()[0]+1);
+
+    /*Validar Foto Trabajo*/
+    uploadFile("foto_trabajo",$bd->getCodTarea()[0]+1);
+
     if ($hayError) {
         include "../views/formularioTarea.php";
     } else {
-        $a->catchTarea();
+        $bd->catchTarea();
     }
 }
