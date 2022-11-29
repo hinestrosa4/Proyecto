@@ -7,7 +7,7 @@ class Provincia
     }
 
     /**
-     * DEvuelve la lista de provincias para crear un select cod->nombre
+     * Devuelve la lista de provincias para crear un select cod->nombre
      */
 
     //el static no funciona.

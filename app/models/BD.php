@@ -107,4 +107,35 @@ var_dump($todocampos);
         $stmt = $this->pdo->query("SELECT id FROM tareas GROUP BY id desc limit 1");
         return $stmt->fetch();
     }
+
+    public function numFilas($tabla){
+
+        $sql = "SELECT * FROM " . $tabla; 
+
+        $resultado = $this->pdo->prepare($sql);
+        $resultado->execute();
+
+        $numFilas = $resultado->rowCount();
+
+        return $numFilas;
+    }
+
+    public function resultadosPorPagina($tabla, $empezarDesde, $tamanioPagina){
+
+        $queryLimite = "SELECT * FROM " . $tabla . " LIMIT " . $empezarDesde . "," . $tamanioPagina;
+
+        $resultado = $this->pdo->prepare($queryLimite);
+        $resultado->execute();
+
+        /*Almacenamos el resultado de fetchAll en una variable*/
+        $datos = $resultado->fetchAll(PDO::FETCH_ASSOC);
+
+        return $datos;
+    }
+
+    public function checkUser($correo,$password){
+        
+        $stmt = $this->pdo->query("SELECT * FROM usuarios where correo='$correo' and clave='$password'");
+        return $stmt->fetch();
+    }
 }
