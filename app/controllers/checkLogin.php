@@ -15,13 +15,14 @@ if (!$_POST) { // Si no han enviado el fomulario
     $datosUser = $bd->checkUser($user, $password);
 
     if (isset($datosUser['correo'])) {
-        echo "existe";
-    } else{
+
+    } else {
         $errores['login'] = "Este usuario no existe";
         $hayError = TRUE;
     }
 
     if ($hayError) {
         include '../views/login.php';
-    }
+    } else
+        include '../views/menuAdmin.php';
 }

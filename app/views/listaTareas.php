@@ -12,8 +12,7 @@
 
 <body>
 
-    <?= creaTable('listaTareas', $nombreCampos, Tarea::getTareasPorPagina($empezarDesde, $tamanioPagina)) ?>
+    <?= creaTable('listaTareas', $nombreCamposImp, Tarea::getTareasImpPorPagina($empezarDesde, $tamanioPagina)) ?>
 
 </body>
-
 </html>

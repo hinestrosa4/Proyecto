@@ -54,7 +54,7 @@ class BD
     {
         $todocampos = $_POST;
 
-        if ($_FILES["fichero_resumen"]['name'] == "")
+        /*if ($_FILES["fichero_resumen"]['name'] == "")
             $todocampos["fichero_resumen"] = "";
         else
             $todocampos["fichero_resumen"] = "app/files/Tarea_" . $this->getCodTarea()[0] + 1 . "-" .  $_FILES["fichero_resumen"]['name'];
@@ -64,7 +64,7 @@ class BD
         else
             $todocampos["foto_trabajo"] = "app/files/Tarea_" . $this->getCodTarea()[0] + 1 . "-" .  $_FILES["foto_trabajo"]['name'];
 
-var_dump($todocampos);
+var_dump($todocampos);*/
 
         $campos = "";
         $names = "";
@@ -120,9 +120,25 @@ var_dump($todocampos);
         return $numFilas;
     }
 
-    public function resultadosPorPagina($tabla, $empezarDesde, $tamanioPagina){
+    public function contenidoTabla($tabla, $empezarDesde, $tamanioPagina){
 
-        $queryLimite = "SELECT * FROM " . $tabla . " LIMIT " . $empezarDesde . "," . $tamanioPagina;
+        $queryLimite = "SELECT id,nif_cif,nombre,apellidos,telefono,descripcion,correo,direccion,poblacion,
+        codigo_postal,provincia,estado,DATE_FORMAT(fecha_creacion, '%d/%m/%Y') AS fecha_creacion ,operario_encargado, DATE_FORMAT(fecha_realizacion, '%d/%m/%Y') AS fecha_realizacion,
+        anotaciones_ant,anotaciones_pos,fichero_resumen,foto_trabajo FROM tareas ORDER BY fecha_realizacion " .  " LIMIT " . $empezarDesde . "," . $tamanioPagina;
+
+        $resultado = $this->pdo->prepare($queryLimite);
+        $resultado->execute();
+
+        /*Almacenamos el resultado de fetchAll en una variable*/
+        $datos = $resultado->fetchAll(PDO::FETCH_ASSOC);
+
+        return $datos;
+    }
+
+    public function contenidoImpTabla($tabla, $empezarDesde, $tamanioPagina){
+
+        $queryLimite = "SELECT id,nombre,apellidos,telefono,descripcion,correo,DATE_FORMAT(fecha_creacion, '%d/%m/%Y') AS fecha_creacion ,operario_encargado, DATE_FORMAT(fecha_realizacion, '%d/%m/%Y') AS fecha_realizacion
+        FROM tareas ORDER BY fecha_realizacion " .  " LIMIT " . $empezarDesde . "," . $tamanioPagina;
 
         $resultado = $this->pdo->prepare($queryLimite);
         $resultado->execute();
@@ -137,5 +153,24 @@ var_dump($todocampos);
         
         $stmt = $this->pdo->query("SELECT * FROM usuarios where correo='$correo' and clave='$password'");
         return $stmt->fetch();
+    }
+
+    public function showTarea($id){
+
+        $queryLimite = "SELECT * FROM tareas where id=$id";
+
+        $resultado = $this->pdo->prepare($queryLimite);
+        $resultado->execute();
+
+        /*Almacenamos el resultado de fetchAll en una variable*/
+        $datos = $resultado->fetchAll(PDO::FETCH_ASSOC);
+
+        return $datos;
+    }
+
+    public function deleteTarea($id){
+
+        $stmt = $this->pdo->query("DELETE from tareas WHERE id=$id");
+        $stmt->execute();
     }
 }

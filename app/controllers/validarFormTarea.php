@@ -82,10 +82,10 @@ if (!$_POST) { // Si no han enviado el fomulario
     }
 
     /*Validar Fichero Resumen*/
-    uploadFile("fichero_resumen",$bd->getCodTarea()[0]+1);
+    //uploadFile("fichero_resumen",$bd->getCodTarea()[0]+1);
 
     /*Validar Foto Trabajo*/
-    uploadFile("foto_trabajo",$bd->getCodTarea()[0]+1);
+    //uploadFile("foto_trabajo",$bd->getCodTarea()[0]+1);
 
     if ($hayError) {
         include "../views/formularioTarea.php";

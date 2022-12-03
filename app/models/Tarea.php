@@ -18,9 +18,15 @@ class Tarea
         return BD::getInstance()->numFilas('tareas');
     }
 
-    static function getTareasPorPagina($empezarDesde, $tamanioPagina)
+    static function getTareasImpPorPagina($empezarDesde, $tamanioPagina)
     {
 
-        return BD::getInstance()->resultadosPorPagina('tareas', $empezarDesde, $tamanioPagina);
+        return BD::getInstance()->contenidoImpTabla('tareas', $empezarDesde, $tamanioPagina);
+    }
+
+    static function getTareas($id)
+    {
+
+        return BD::getInstance()->showTarea($id);
     }
 }

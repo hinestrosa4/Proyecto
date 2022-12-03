@@ -96,7 +96,7 @@
         <?= VerError('fecha_realizacion') ?>
         </div>
 
-        <div class="col-md-3">
+        <!--<div class="col-md-3">
         <label>Anotaciones anteriores</label>
         <textarea class="form-control" placeholder="Escriba sus anotaciones..." name="anotaciones_ant" id="anotaciones1" cols="10" rows="4"><?= ValorPost('anotaciones_ant') ?></textarea>
         </div>
@@ -114,12 +114,11 @@
         <div class="col-md-3">
         <label>Fotos del trabajo realizado</label>
         <input class="form-control" name="foto_trabajo" type="file">
-        </div>
+        </div>-->
 
         <div class="col-md-3" id="buttonE">
         <button class="btn btn-primary" type="submit" name="">Enviar</button>
         </div>
     </form>
 </body>
-
 </html>
