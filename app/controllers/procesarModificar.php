@@ -1,28 +1,33 @@
 <?php
 
-include __DIR__."utilsFormulario.php";
-include __DIR__."../models/BD.php";
+include __DIR__."/utilsFormulario.php";
+include __DIR__."/../models/BD.php";
 //include '../controllers/queryProvincia.php';
 $bd = BD::getInstance();
-include __DIR__."../libraries/creaSelect.php";
-include __DIR__."../models/Provincia.php";
-include __DIR__."../models/Usuario.php";
+include __DIR__."/../libraries/creaSelect.php";
+include __DIR__."/../models/Provincia.php";
+include __DIR__."/../models/Usuario.php";
+include __DIR__."/../models/Tarea.php";
 
 //Librerias
 include __DIR__."/../libraries/validarDNI.php";
-include __DIR__."../libraries/validarTelefono.php";
-include __DIR__."../libraries/validarCodigoPostal.php";
-include __DIR__."../libraries/validarCorreo.php";
-include __DIR__."../libraries/validarFechaRealizacion.php";
-include __DIR__."../libraries/validarCIF.php";
-include __DIR__."../libraries/uploadFile.php";
+include __DIR__."/../libraries/validarTelefono.php";
+include __DIR__."/../libraries/validarCodigoPostal.php";
+include __DIR__."/../libraries/validarCorreo.php";
+include __DIR__."/../libraries/validarFechaRealizacion.php";
+include __DIR__."/../libraries/validarCIF.php";
+include __DIR__."/../libraries/uploadFile.php";
 
+$id = $_GET['id'];
 $hayError = FALSE;
 $errores = [];
 $fechaActual = date('Y-m-d');
 
+
+
 if (!$_POST) { // Si no han enviado el fomulario
-    include __DIR__.'/../views/formularioTarea.php';
+    $datosTarea = Tarea::getTareas($id);
+    include __DIR__."/../views/modificarTarea.php";
 } else {
 
     /*Validar Descripcion y Persona de contacto*/
@@ -82,14 +87,15 @@ if (!$_POST) { // Si no han enviado el fomulario
     }
 
     /*Validar Fichero Resumen*/
-    //uploadFile("fichero_resumen",$bd->getCodTarea()[0]+1);
+    uploadFile("fichero_resumen", $bd->getCodTarea()[0] + 1);
 
     /*Validar Foto Trabajo*/
-    //uploadFile("foto_trabajo",$bd->getCodTarea()[0]+1);
+    uploadFile("foto_trabajo", $bd->getCodTarea()[0] + 1);
 
     if ($hayError) {
-        include __DIR__."/../views/formularioTarea.php";
+        include __DIR__."/../views/modificarTarea.php";
     } else {
-        $bd->catchTarea();
-    }
+        $bd->modTarea($id, $_POST);
+        header('Location: procesarListaTareas.php');
+    } 
 }

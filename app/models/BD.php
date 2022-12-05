@@ -53,25 +53,12 @@ class BD
     function catchTarea()
     {
         $todocampos = $_POST;
-
-        /*if ($_FILES["fichero_resumen"]['name'] == "")
-            $todocampos["fichero_resumen"] = "";
-        else
-            $todocampos["fichero_resumen"] = "app/files/Tarea_" . $this->getCodTarea()[0] + 1 . "-" .  $_FILES["fichero_resumen"]['name'];
-
-        if ($_FILES["foto_trabajo"]['name'] == "")
-            $todocampos["foto_trabajo"] = "";
-        else
-            $todocampos["foto_trabajo"] = "app/files/Tarea_" . $this->getCodTarea()[0] + 1 . "-" .  $_FILES["foto_trabajo"]['name'];
-
-var_dump($todocampos);*/
-
         $campos = "";
         $names = "";
 
-        foreach ($todocampos as $nam => $camp) {
+        foreach ($todocampos as $name => $camp) {
             $campos  .= $camp . ',';
-            $names .= $nam . ',';
+            $names .= $name . ',';
         }
 
         $campos2 = substr($campos, 0, -1);
@@ -108,9 +95,10 @@ var_dump($todocampos);*/
         return $stmt->fetch();
     }
 
-    public function numFilas($tabla){
+    public function numFilas($tabla)
+    {
 
-        $sql = "SELECT * FROM " . $tabla; 
+        $sql = "SELECT * FROM " . $tabla;
 
         $resultado = $this->pdo->prepare($sql);
         $resultado->execute();
@@ -120,7 +108,8 @@ var_dump($todocampos);*/
         return $numFilas;
     }
 
-    public function contenidoTabla($tabla, $empezarDesde, $tamanioPagina){
+    public function contenidoTabla($tabla, $empezarDesde, $tamanioPagina)
+    {
 
         $queryLimite = "SELECT id,nif_cif,nombre,apellidos,telefono,descripcion,correo,direccion,poblacion,
         codigo_postal,provincia,estado,DATE_FORMAT(fecha_creacion, '%d/%m/%Y') AS fecha_creacion ,operario_encargado, DATE_FORMAT(fecha_realizacion, '%d/%m/%Y') AS fecha_realizacion,
@@ -135,7 +124,8 @@ var_dump($todocampos);*/
         return $datos;
     }
 
-    public function contenidoImpTabla($tabla, $empezarDesde, $tamanioPagina){
+    public function contenidoImpTabla($tabla, $empezarDesde, $tamanioPagina)
+    {
 
         $queryLimite = "SELECT id,nombre,apellidos,telefono,descripcion,correo,DATE_FORMAT(fecha_creacion, '%d/%m/%Y') AS fecha_creacion ,operario_encargado, DATE_FORMAT(fecha_realizacion, '%d/%m/%Y') AS fecha_realizacion
         FROM tareas ORDER BY fecha_realizacion " .  " LIMIT " . $empezarDesde . "," . $tamanioPagina;
@@ -149,14 +139,15 @@ var_dump($todocampos);*/
         return $datos;
     }
 
-    public function checkUser($correo,$password){
-        
+    public function checkUser($correo, $password)
+    {
+
         $stmt = $this->pdo->query("SELECT * FROM usuarios where correo='$correo' and clave='$password'");
         return $stmt->fetch();
     }
 
-    public function showTarea($id){
-
+    public function showTarea($id)
+    {
         $queryLimite = "SELECT * FROM tareas where id=$id";
 
         $resultado = $this->pdo->prepare($queryLimite);
@@ -168,9 +159,36 @@ var_dump($todocampos);*/
         return $datos;
     }
 
-    public function deleteTarea($id){
+    public function showCampo($id, $campo)
+    {
+        $stmt = $this->pdo->query("SELECT $campo FROM tareas where id=$id");
+        return $stmt->fetch();
+    }
+
+    public function deleteTarea($id)
+    {
 
         $stmt = $this->pdo->query("DELETE from tareas WHERE id=$id");
         $stmt->execute();
+    }
+
+    public function modTarea($id, $datos)
+    {
+        $fechaActual = date('Y-m-d');
+
+        $stmt = $this->pdo->prepare("UPDATE tareas SET nif_cif = ?, nombre = ?, apellidos = ?, telefono = ?, descripcion = ?, correo = ?,
+        direccion = ?, poblacion = ?, codigo_postal = ?, provincia = ?, estado = ?, fecha_creacion = ?, operario_encargado = ?,
+        fecha_realizacion = ?, anotaciones_ant = ?, anotaciones_pos = ?, fichero_resumen = ?, foto_trabajo = ? WHERE id = $id;");
+
+        $resultado = $stmt->execute([
+            $datos['nif_cif'], $datos['nombre'], $datos['apellidos'], $datos['telefono'], $datos['descripcion'], $datos['correo'],
+            $datos['direccion'], $datos['poblacion'], $datos['codigo_postal'], $datos['provincia'], $datos['estado'], $fechaActual, $datos['operario_encargado'],
+            $datos['fecha_realizacion'], $datos['anotaciones_ant'], $datos['anotaciones_pos'], "app/files/Tarea_$id-" . $_FILES['fichero_resumen']['name'], "app/files/Tarea_$id-" . $_FILES['foto_trabajo']['name']
+        ]); # Pasar en el mismo orden de los ?
+
+        if ($resultado === TRUE)
+            return true;
+        else
+            return false;
     }
 }

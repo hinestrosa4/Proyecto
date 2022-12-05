@@ -13,7 +13,7 @@
 <body>
     <h1>Detalles de Tarea <?= $id ?></h1>
 
-    <?= creaTable('verDetalles', $nombreCampos, Tarea::getTareas($id)) ?>
+    <?= creaTable('verDetalles', $nombreCampos,$nombresScreen, Tarea::getTareas($id)) ?>
 
     <div>
         <a class="btn btn-success" href="../controllers/procesarlistaTareas.php?id=<?=$id?>">Atrás</a>

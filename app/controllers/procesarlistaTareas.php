@@ -17,6 +17,9 @@ $nombreCamposImp = [
     'operario_encargado', 'fecha_realizacion'
 ];
 
+$nombresScreen = ["Identificador", "Nombre", "Apellidos", "Teléfono", "Correo", "Fecha Creación",
+"Operario Encargado", "Fecha Realización"];
+
 // Preparar
 
 $tamanioPagina = 5;
@@ -36,7 +39,7 @@ if (isset($_GET['pagina'])) {
 }
 
 $empezarDesde = ($pagina - 1) * $tamanioPagina;
-echo $empezarDesde;
+//echo $empezarDesde;
 
 if ($empezarDesde < 0) {
     $empezarDesde = 0;
@@ -46,7 +49,7 @@ if ($empezarDesde < 0) {
 $numFilas = Tarea::getNumeroTareas();
 $totalPaginas = ceil($numFilas / $tamanioPagina);
 
-include('../views/listaTareas.php');
+include(__DIR__.'/../views/listaTareas.php');
 echo "<p><b>Página Actual:</b> $pagina</p>";
 
 

@@ -1,13 +1,13 @@
 <?php
 
-function creaTable($name, $nombreCampos, $listaValores)
+function creaTable($name, $nombreCampos, $nombresScreen, $listaValores)
 {
 
     $html = '<table class="table table-bordered name="' . $name . '" style=text-align:center;><tr><thead>';
 
-    foreach ($nombreCampos as $id => $value) :
+    foreach ($nombresScreen as $id => $value) :
 
-        $html .= '<th>' . $nombreCampos[$id] . '</th>';
+        $html .= '<th>' . $nombresScreen[$id] . '</th>';
 
     endforeach;
 
@@ -22,9 +22,9 @@ function creaTable($name, $nombreCampos, $listaValores)
             $html .= '<td>' . $valor[$nombreCampos[$id]] . '</td>';
             
         endforeach;
-        
+
         $html.= "<td><a class="."'btn btn-primary'"."href=../controllers/procesarVerDetalles.php?id=$valor[id] name=$valor[id]>Ver detalles</a>
-        <a class="."'btn btn-warning'"."href=# name=$valor[id]>Modificar</a>
+        <a class="."'btn btn-warning'"."href=../controllers/procesarModificar.php?id=$valor[id] name=$valor[id]>Modificar</a>
         <a class="."'btn btn-danger'"."href=../controllers/procesarConfirmarBorrar.php?id=$valor[id] name=$valor[id]>Borrar</a></td>";
         $html .= '</tr>';
 

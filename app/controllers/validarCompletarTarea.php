@@ -1,6 +1,6 @@
 <?php
 
-include "utilsFormulario.php";
-include "../models/BD.php";
+include __DIR__."/utilsFormulario.php";
+include __DIR__."/../models/BD.php";
 
 $bd->catchTarea();

@@ -14,6 +14,8 @@
     <h1>Confirmación Borrar Tarea</h1>
     <p>¿Estás seguro de que quieres borrar la tarea?</p>
 
+    <!--<?= creaSimpleTable("tablaBorrar",$detalles) ?>-->
+
     <table class="table" style="text-align: center;">
         <tr>
             <th>ID</th>

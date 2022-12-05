@@ -1,7 +1,7 @@
 <?php
 
-
-include '../models/BD.php';
+include __DIR__.'/../libraries/creaSimpleTable.php';
+include __DIR__.'/../models/BD.php';
 
 $bd = BD::getInstance();
 

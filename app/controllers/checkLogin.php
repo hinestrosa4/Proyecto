@@ -1,11 +1,11 @@
 <?php
-include "utilsFormulario.php";
-include "../models/BD.php";
+include __DIR__."/utilsFormulario.php";
+include __DIR__."/../models/BD.php";
 
 $bd = BD::getInstance();
 
 if (!$_POST) { // Si no han enviado el fomulario
-    include '../views/login.php';
+    include __DIR__.'/../views/login.php';
 } else {
 
     $user = $_POST['tCorreoLogin'];
@@ -22,7 +22,7 @@ if (!$_POST) { // Si no han enviado el fomulario
     }
 
     if ($hayError) {
-        include '../views/login.php';
+        include __DIR__.'/../views/login.php';
     } else
-        include '../views/menuAdmin.php';
+        include __DIR__.'/../views/menuAdmin.php';
 }
