@@ -1,28 +1,28 @@
 <?php
 
-include __DIR__."utilsFormulario.php";
-include __DIR__."../models/BD.php";
+include "varios.php";
+include CONTROLLERS_FOLDER."utilsFormulario.php";
+include MODELS_FOLDER."BD.php";
 //include '../controllers/queryProvincia.php';
 $bd = BD::getInstance();
-include __DIR__."../libraries/creaSelect.php";
-include __DIR__."../models/Provincia.php";
-include __DIR__."../models/Usuario.php";
+include LIBRARIES_FOLDER."creaSelect.php";
+include MODELS_FOLDER."Provincia.php";
+include MODELS_FOLDER."Usuario.php";
 
 //Librerias
-include __DIR__."/../libraries/validarDNI.php";
-include __DIR__."../libraries/validarTelefono.php";
-include __DIR__."../libraries/validarCodigoPostal.php";
-include __DIR__."../libraries/validarCorreo.php";
-include __DIR__."../libraries/validarFechaRealizacion.php";
-include __DIR__."../libraries/validarCIF.php";
-include __DIR__."../libraries/uploadFile.php";
+include LIBRARIES_FOLDER."validarDNI.php";
+include LIBRARIES_FOLDER."validarTelefono.php";
+include LIBRARIES_FOLDER."validarCodigoPostal.php";
+include LIBRARIES_FOLDER."validarCorreo.php";
+include LIBRARIES_FOLDER."validarFechaRealizacion.php";
+include LIBRARIES_FOLDER."validarCIF.php";
+include LIBRARIES_FOLDER."uploadFile.php";
 
 $hayError = FALSE;
 $errores = [];
-$fechaActual = date('Y-m-d');
 
 if (!$_POST) { // Si no han enviado el fomulario
-    include __DIR__.'/../views/formularioTarea.php';
+    echo $blade->render('formularioTarea');
 } else {
 
     /*Validar Descripcion y Persona de contacto*/
@@ -88,7 +88,7 @@ if (!$_POST) { // Si no han enviado el fomulario
     //uploadFile("foto_trabajo",$bd->getCodTarea()[0]+1);
 
     if ($hayError) {
-        include __DIR__."/../views/formularioTarea.php";
+        echo $blade->render('formularioTarea');
     } else {
         $bd->catchTarea();
     }

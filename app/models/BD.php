@@ -69,7 +69,7 @@ class BD
 
         Tarea::addTarea($a_campos, $names2);
 
-        echo "<a href='procesar_form.php'>Volver al formulario</a>";
+        echo "<a href='../controllers/validarFormTarea.php'>Volver al formulario</a>";
     }
 
     function insertarCampos($tabla, $listaValues, $campos)
@@ -175,7 +175,6 @@ class BD
     public function modTarea($id, $datos)
     {
         $fechaActual = date('Y-m-d');
-
         $stmt = $this->pdo->prepare("UPDATE tareas SET nif_cif = ?, nombre = ?, apellidos = ?, telefono = ?, descripcion = ?, correo = ?,
         direccion = ?, poblacion = ?, codigo_postal = ?, provincia = ?, estado = ?, fecha_creacion = ?, operario_encargado = ?,
         fecha_realizacion = ?, anotaciones_ant = ?, anotaciones_pos = ?, fichero_resumen = ?, foto_trabajo = ? WHERE id = $id;");
@@ -184,6 +183,20 @@ class BD
             $datos['nif_cif'], $datos['nombre'], $datos['apellidos'], $datos['telefono'], $datos['descripcion'], $datos['correo'],
             $datos['direccion'], $datos['poblacion'], $datos['codigo_postal'], $datos['provincia'], $datos['estado'], $fechaActual, $datos['operario_encargado'],
             $datos['fecha_realizacion'], $datos['anotaciones_ant'], $datos['anotaciones_pos'], "app/files/Tarea_$id-" . $_FILES['fichero_resumen']['name'], "app/files/Tarea_$id-" . $_FILES['foto_trabajo']['name']
+        ]); # Pasar en el mismo orden de los ?
+
+        if ($resultado === TRUE)
+            return true;
+        else
+            return false;
+    }
+
+    public function completarTarea($id, $datos)
+    {
+        $stmt = $this->pdo->prepare("UPDATE tareas SET anotaciones_ant = ?, anotaciones_pos = ?, fichero_resumen = ?, foto_trabajo = ? WHERE id = $id;");
+
+        $resultado = $stmt->execute([
+            $datos['anotaciones_ant'], $datos['anotaciones_pos'], "Tarea_$id-" . $_FILES['fichero_resumen']['name'], "Tarea_$id-" . $_FILES['foto_trabajo']['name']
         ]); # Pasar en el mismo orden de los ?
 
         if ($resultado === TRUE)

@@ -12,6 +12,11 @@ class Tarea
         return BD::getInstance()->insertarCampos('tareas', $names, $campos);
     }
 
+    static function completarTarea($id, $camposCompletar)
+    {
+        return BD::getInstance()->modTarea($id, $camposCompletar);
+    }
+
     static function getNumeroTareas()
     {
 

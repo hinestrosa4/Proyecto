@@ -12,7 +12,8 @@
 
 <body>
 
-    <form class="row g-3 needs-validation" method="post" action="../controllers/validarFormTarea.php" enctype="multipart/form-data">
+    <?php $__env->startSection('cuerpo'); ?>
+    <form class="row g-3 needs-validation" method="post" action="/app/controllers/validarFormTarea.php" enctype="multipart/form-data">
     
     <div class="col-md-3">
         <label class="form-label">NIF o CIF</label>
@@ -80,10 +81,10 @@
         </select>
         </div>
 
-        <div class="col-md-3">
+        <!--<div class="col-md-3">
         <label>Fecha de creación</label>
         <input class="form-control" readonly type="date" name="fecha_creacion" value="<?= $fechaActual ?>">
-        </div>
+        </div>-->
 
         <div class="col-md-3">
         <label>Operario encargado</label>
@@ -116,9 +117,12 @@
         <input class="form-control" name="foto_trabajo" type="file">
         </div>-->
 
-        <div class="col-md-3" id="buttonE">
+        <div id="buttonE">
         <button class="btn btn-primary" type="submit" name="">Enviar</button>
-        </div>
+        <a class="btn btn-success" href="/app/controllers/procesarlistaTareas.php">Atrás</a>
+    </div>
     </form>
+    <?php $__env->stopSection(); ?>
 </body>
 </html>
+<?php echo $__env->make('_template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Hinestrosa\Desktop\DAW\2\PHP\Proyectos\Proyecto\app\views/formularioTarea.blade.php ENDPATH**/ ?>

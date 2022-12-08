@@ -1,8 +1,10 @@
 <?php
 
-include('../models/Tarea.php');
-include('../models/BD.php');
-include('../libraries/creaTable.php');
+include "varios.php";
+
+include(MODELS_FOLDER.'Tarea.php');
+include(MODELS_FOLDER.'BD.php');
+include(LIBRARIES_FOLDER.'creaTable.php');
 
 //$listaTareas = Tarea::getListaTareas();
 
@@ -27,7 +29,6 @@ $tamanioPagina = 5;
 if (isset($_GET['pagina'])) {
 
     if ($_GET['pagina'] == 1) {
-
         header('location:procesarListaTareas.php');
     } else {
 
@@ -49,19 +50,14 @@ if ($empezarDesde < 0) {
 $numFilas = Tarea::getNumeroTareas();
 $totalPaginas = ceil($numFilas / $tamanioPagina);
 
-include(__DIR__.'/../views/listaTareas.php');
-echo "<p><b>Página Actual:</b> $pagina</p>";
+//echo $blade->render('listaTareas');
 
-
-echo "<ul class=pagination>";
-
-echo "<li class=page-item><a class=page-link href='? pagina=" . 1 . "'>Primera</a> ";
-echo "<li class=page-item><a class=page-link href='? pagina=" . $pagina - 1 . "'><<</a> ";
-
-for ($i = 1; $i <= $totalPaginas; $i++) {
-    echo "<li class=page-item><a class=page-link href='? pagina=" . $i . "'>" . $i . "</a> ";
-}
-
-echo "<li class=page-item><a class=page-link href='? pagina=" . $pagina + 1 . "'>>></a> ";
-echo "<li class=page-item><a class=page-link href='? pagina=" . $totalPaginas . "'>Última</a> ";
-echo "</ul>";
+echo $blade->render('listaTareas', [
+    'tareas' => Tarea::getTareasImpPorPagina($empezarDesde, $tamanioPagina),
+    'empezarDesde' => $empezarDesde,
+    'tamanioPagina' => $tamanioPagina,
+    'pagina' => $pagina,
+    'totalPaginas' => $totalPaginas,
+    'nombreCamposImp'=>$nombreCamposImp,
+    'nombresScreen'=>$nombresScreen
+]);

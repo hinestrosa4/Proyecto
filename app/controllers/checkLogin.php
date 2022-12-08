@@ -1,11 +1,13 @@
 <?php
-include __DIR__."/utilsFormulario.php";
-include __DIR__."/../models/BD.php";
+
+include "varios.php";
+include CONTROLLERS_FOLDER . "utilsFormulario.php";
+include MODELS_FOLDER . "BD.php";
 
 $bd = BD::getInstance();
 
 if (!$_POST) { // Si no han enviado el fomulario
-    include __DIR__.'/../views/login.php';
+    echo $blade->render('login');
 } else {
 
     $user = $_POST['tCorreoLogin'];
@@ -15,14 +17,14 @@ if (!$_POST) { // Si no han enviado el fomulario
     $datosUser = $bd->checkUser($user, $password);
 
     if (isset($datosUser['correo'])) {
-
     } else {
         $errores['login'] = "Este usuario no existe";
         $hayError = TRUE;
     }
 
     if ($hayError) {
-        include __DIR__.'/../views/login.php';
+        echo $blade->render('login');
     } else
-        include __DIR__.'/../views/menuAdmin.php';
+        echo $blade->render('nada');
+    //include VIEWS_FOLDER.'menuAdmin.php';
 }

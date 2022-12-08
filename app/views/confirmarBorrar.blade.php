@@ -11,6 +11,8 @@
 </head>
 
 <body>
+@extends('_template')
+    @section('cuerpo')
     <h1>Confirmación Borrar Tarea</h1>
     <p>¿Estás seguro de que quieres borrar la tarea?</p>
 
@@ -41,6 +43,6 @@
         <a class="btn btn-success" href="../controllers/borrarTarea.php?id=<?= $_GET['id'] ?>">Si, estoy seguro</a>
         <a class="btn btn-danger" href="../controllers/procesarlistaTareas.php">No</a>
     </div>
-
+    @endsection
 </body>
 </html>

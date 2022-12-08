@@ -13,7 +13,7 @@
 
 <body class="text-center">
     <main class="form-signin w-100 m-auto">
-        <form action="../controllers/checkLogin.php" method="POST">
+        <form action="/app/controllers/checkLogin.php" method="POST">
             
             <img class="mb-4" src="../../assets/img/login.png" width="72" height="72">
             <h1 class="h3 mb-3 fw-normal">Iniciar Sesión</h1>

@@ -16,8 +16,8 @@
     <div id="menuSup">
         <a href="../controllers/procesarlistaTareas.php" id="verLista" class="btn btn-primary">Ver Incidencias/Tareas</a><br><br>
         <a href="../controllers/validarFormTarea.php" id="addIncidencia" class="btn btn-primary">Añadir Incidencia/Tarea</a><br><br>
-        <a id="cambiarEstado" class="btn btn-primary">Cambiar Estado de Incidencia/Tarea</a><br><br>
+        <a href="#" id="completarTarea" class="btn btn-primary">Completar Tarea</a><br><br>
         <a id="buscarFiltrar" class="btn btn-primary">Buscar Tarea</a><br>
     </div>
 </body>
-</html>
+</html><?php /**PATH C:\Users\Hinestrosa\Desktop\DAW\2\PHP\Proyectos\Proyecto\app\views/menuAdmin.blade.php ENDPATH**/ ?>

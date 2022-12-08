@@ -1,10 +1,13 @@
 <?php
+include "varios.php";
 
-include __DIR__.'/../libraries/creaSimpleTable.php';
-include __DIR__.'/../models/BD.php';
+include LIBRARIES_FOLDER.'creaSimpleTable.php';
+include MODELS_FOLDER.'BD.php';
 
 $bd = BD::getInstance();
 
 $detalles = $bd->showTarea($_GET['id']);
 
-include '../views/confirmarBorrar.php';
+echo $blade->render('confirmarBorrar', [
+    'detalles'=>$detalles,
+]);
