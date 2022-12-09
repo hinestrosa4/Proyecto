@@ -6,6 +6,10 @@ include MODELS_FOLDER . "BD.php";
 
 $bd = BD::getInstance();
 
+if (isset($_SESSION['login'])) {
+    session_destroy();
+}
+
 if (!$_POST) { // Si no han enviado el fomulario
     echo $blade->render('login');
 } else {
@@ -24,7 +28,20 @@ if (!$_POST) { // Si no han enviado el fomulario
 
     if ($hayError) {
         echo $blade->render('login');
-    } else
-        echo $blade->render('nada');
-    //include VIEWS_FOLDER.'menuAdmin.php';
+    } else {
+        session_start();
+        //var_dump($datosUser);
+        $fechaActual = date('H:i:s');
+
+        $_SESSION["fechaLogin"] = $fechaActual;
+        $_SESSION["login"] = $datosUser["nombre"];
+
+        //echo $datosUser["isAdmin"];
+        if ($datosUser["isAdmin"] == 0) {
+            $_SESSION["rol"] = "operario";
+        } else
+            $_SESSION["rol"] = "admin";
+
+        echo $blade->render('inicio');
+    }
 }

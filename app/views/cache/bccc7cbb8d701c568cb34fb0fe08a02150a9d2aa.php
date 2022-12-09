@@ -11,8 +11,11 @@
 </head>
 
 <body>
-
+    
     <?php $__env->startSection('cuerpo'); ?>
+    <!--<p><?= $usuario ?></p>-->
+    <h1 style="margin-left: 50px;margin-bottom:20px;">Lista de Tareas</h1>
+    <hr>
     <?= creaTable('listaTareas', $nombreCamposImp, $nombresScreen, Tarea::getTareasImpPorPagina($empezarDesde, $tamanioPagina)) ?>
 
     <p><b>Página Actual:</b> <?= $pagina ?></p>
@@ -30,10 +33,11 @@
         <li class=page-item><a class=page-link href='?pagina=<?= $pagina + 1 ?>'>>></a>
         <li class=page-item><a class=page-link href='?pagina=<?= $totalPaginas ?>'>Última</a>
     </ul>
-<form action="procesarListaTareas.php">
-        Indique una página: <input type=text value= "1" name=pagSelect> <button class="btn btn-primary">Ir a la página</button>
-        </form>
-        <?php $__env->stopSection(); ?>
-    </body>
+    <form action="/app/controllers/procesarlistaTareas.php" method="get">
+        Indique una página: <input type=text value="1" name="pagina"> <button class="btn btn-primary">Ir a la página</button>
+    </form>
+    <?php $__env->stopSection(); ?>
+</body>
+
 </html>
 <?php echo $__env->make('_template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Hinestrosa\Desktop\DAW\2\PHP\Proyectos\Proyecto\app\views/listaTareas.blade.php ENDPATH**/ ?>

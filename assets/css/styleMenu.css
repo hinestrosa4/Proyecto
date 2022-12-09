@@ -1,3 +1,8 @@
-a{
-    color: red;
+.navbar-brand{
+    margin-left: 80px;
+    font-weight: bold;
+}
+
+.navbar-brand:hover{
+    color: #CF6B15;
 }

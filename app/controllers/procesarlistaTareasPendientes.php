@@ -16,7 +16,8 @@ include(LIBRARIES_FOLDER.'creaTable.php');
 
 $nombreCamposImp = [
     'id', 'nombre', 'apellidos', 'telefono', 'correo', 'estado',
-    'operario_encargado', 'fecha_realizacion'];
+    'operario_encargado', 'fecha_realizacion'
+];
 
 $nombresScreen = ["Identificador", "Nombre", "Apellidos", "Teléfono", "Correo", "Estado",
 "Operario Encargado", "Fecha Realización"];
@@ -28,7 +29,7 @@ $tamanioPagina = 5;
 if (isset($_GET['pagina'])) {
 
     if ($_GET['pagina'] == 1) {
-        header('location:procesarListaTareas.php');
+        header('location:procesarlistaTareasPendientes.php');
     } else {
 
         $pagina = $_GET['pagina'];
@@ -39,20 +40,18 @@ if (isset($_GET['pagina'])) {
 }
 
 $empezarDesde = ($pagina - 1) * $tamanioPagina;
-//echo $empezarDesde;
 
 if ($empezarDesde < 0) {
     $empezarDesde = 0;
     $pagina = 1;
 }
 
-$numFilas = Tarea::getNumeroTareas();
+$numFilas = Tarea::getNumeroTareasPendientes();
 $totalPaginas = ceil($numFilas / $tamanioPagina);
 
-//echo $blade->render('listaTareas');
 
-echo $blade->render('listaTareas', [
-    'tareas' => Tarea::getTareasImpPorPagina($empezarDesde, $tamanioPagina),
+echo $blade->render('listaTareasPendientes', [
+    'tareas' => Tarea::getTareasPendientes($empezarDesde, $tamanioPagina),
     'empezarDesde' => $empezarDesde,
     'tamanioPagina' => $tamanioPagina,
     'pagina' => $pagina,

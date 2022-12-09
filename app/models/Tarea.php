@@ -23,10 +23,22 @@ class Tarea
         return BD::getInstance()->numFilas('tareas');
     }
 
+    static function getNumeroTareasPendientes()
+    {
+
+        return BD::getInstance()->numFilasPendientes('tareas');
+    }
+
     static function getTareasImpPorPagina($empezarDesde, $tamanioPagina)
     {
 
         return BD::getInstance()->contenidoImpTabla('tareas', $empezarDesde, $tamanioPagina);
+    }
+
+    static function getTareasPendientes($empezarDesde, $tamanioPagina)
+    {
+
+        return BD::getInstance()->tareasPendiente('tareas', $empezarDesde, $tamanioPagina);
     }
 
     static function getTareas($id)

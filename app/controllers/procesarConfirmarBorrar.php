@@ -1,4 +1,5 @@
 <?php
+session_start();
 include "varios.php";
 
 include LIBRARIES_FOLDER.'creaSimpleTable.php';

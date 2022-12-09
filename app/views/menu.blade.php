@@ -11,11 +11,24 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-dark bg-dark" id="menu">
+    <nav class="navbar navbar-light" style="background-color: #F0C80A;">
         <ul>
             <a class="navbar-brand" href="/app/controllers/procesarlistaTareas.php">Ver Lista Tareas</a>
-            <a class="navbar-brand" href="../controllers/validarFormTarea.php">Añadir Incidencia/Tarea</a>
+            <a class="navbar-brand" href="/app/controllers/procesarlistaTareasPendientes.php">Ver Tareas Pendientes</a>
+            <a class="navbar-brand" href="#">Filtros</a>
+            <?php
+            //echo $_SESSION["admin"];
+            if ($_SESSION["rol"] == "admin") {
+
+            ?>
+                <a class="navbar-brand" href="/app/controllers/validarFormTarea.php">Añadir Incidencia/Tarea</a>
+                <a class="navbar-brand" href="#">Usuarios</a>
+            <?php
+            }
+
+            ?>
         </ul>
     </nav>
 </body>
+
 </html>

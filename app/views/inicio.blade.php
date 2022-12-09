@@ -8,9 +8,8 @@
 </head>
 <body>
 @extends('_template')
-
 @section('cuerpo')
-
 @endsection
+
 </body>
 </html>

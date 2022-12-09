@@ -36,24 +36,26 @@
 
     <form class="row g-3 needs-validation" method="post" action="/app/controllers/procesarCompletarTarea.php?id=<?= $id ?>" enctype="multipart/form-data">
 
-        <div class="col-md-3">
+    <div class="col-md-3">
             <label class="form-label">Estado</label>
-            <select class="form-select" name="estado" id="estados">
-                <option value="b">Esperando ser aprobada</option>
-                <option value="p">Pendiente</option>
-                <option value="r">Realizada</option>
-                <option value="c">Cancelada</option>
+            <select class="form-select" name="estado">
+                <option value="b" <?= (isset($detalles[0]["estado"]) ? $detalles[0]["estado"] : ValorPost('estado')) == 'b' ? 'selected' : '' ?>>Esperando ser aprobada</option>
+                <option value="p" <?= (isset($detalles[0]["estado"]) ? $detalles[0]["estado"] : ValorPost('estado')) == 'p' ? 'selected' : '' ?>>Pendiente</option>
+                <option value="r" <?= (isset($detalles[0]["estado"]) ? $detalles[0]["estado"] : ValorPost('estado')) == 'r' ? 'selected' : '' ?>>Realizada</option>
+                <option value="c" <?= (isset($detalles[0]["estado"]) ? $detalles[0]["estado"] : ValorPost('estado')) == 'c' ? 'selected' : '' ?>>Cancelada</option>
             </select>
         </div>
 
         <div class="col-md-3">
             <label>Anotaciones anteriores</label>
-            <textarea class="form-control" placeholder="Escriba sus anotaciones..." name="anotaciones_ant" id="anotaciones1" cols="10" rows="4"><?= ValorPost('anotaciones_ant') ?></textarea>
+            <textarea class="form-control" placeholder="Escriba sus anotaciones..." name="anotaciones_ant" id="anotaciones1" cols="10" rows="4"><?= isset($detalles[0]["anotaciones_ant"]) ? $detalles[0]["anotaciones_ant"] : "" ?>
+</textarea>
         </div>
 
         <div class="col-md-3">
             <label>Anotaciones posteriores</label>
-            <textarea class="form-control" placeholder="Escriba sus anotaciones..." name="anotaciones_pos" id="anotaciones2" cols="10" rows="4"><?= ValorPost('anotaciones_pos') ?></textarea>
+            <textarea class="form-control" placeholder="Escriba sus anotaciones..." name="anotaciones_pos" id="anotaciones2" cols="10" rows="4"><?= isset($detalles[0]["anotaciones_pos"]) ? $detalles[0]["anotaciones_pos"] : "" ?>
+</textarea>
         </div>
 
         <div class="col-md-3">

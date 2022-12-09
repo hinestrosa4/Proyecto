@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $prov = array();
 
 $stmt = $pdo->prepare('SELECT codPoblacion,nombre FROM poblacion');

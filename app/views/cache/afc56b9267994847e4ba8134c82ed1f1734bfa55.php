@@ -15,48 +15,82 @@
     <?php $__env->startSection('cuerpo'); ?>
     <h1>Detalles de Tarea <?= $id ?></h1>
 
-    <table class="table table-bordered">
+    <table class="table table-hover" style="text-align:center">
         <tr>
             <th>ID</th>
-            <th>NIF/CIF</th>
-            <th>Nombre</th>
-            <th>Apellidos</th>
-            <th>Teléfono</th>
-            <th>Descripción</th>
-            <th>Email</th>
-            <th>Dirección</th>
-            <th>Población</th>
-            <th>Código Postal</th>
-            <th>Provincias</th>
-            <th>Estado</th>
-            <th>Fecha de Creacion</th>
-            <th>Operario Encargado</th>
-            <th>Fecha de Realizacion</th>
-            <th>Anotaciones Anteriores</th>
-            <th>Anotaciones Posteriores</th>
-            <th>Fichero Resumen</th>
-            <th>Foto Trabajo</th>
+            <td><?= $datosTarea[0]['id'] ?></td>
         </tr>
         <tr>
-            <td><?= $datosTarea[0]['id'] ?></td>
+            <th>NIF/CIF</th>
             <td><?= $datosTarea[0]['nif_cif'] ?></td>
+        </tr>
+        <tr>
+            <th>Nombre</th>
             <td><?= $datosTarea[0]['nombre'] ?></td>
+        </tr>
+        <tr>
+            <th>Apellidos</th>
             <td><?= $datosTarea[0]['apellidos'] ?></td>
+        </tr>
+        <tr>
+            <th>Teléfono</th>
             <td><?= $datosTarea[0]['telefono'] ?></td>
+        </tr>
+        <tr>
+            <th>Descripción</th>
             <td><?= $datosTarea[0]['descripcion'] ?></td>
+        </tr>
+        <tr>
+            <th>Correo</th>
             <td><?= $datosTarea[0]['correo'] ?></td>
+        </tr>
+        <tr>
+            <th>Dirección</th>
             <td><?= $datosTarea[0]['direccion'] ?></td>
+        </tr>
+        <tr>
+            <th>Población</th>
             <td><?= $datosTarea[0]['poblacion'] ?></td>
+        </tr>
+        <tr>
+            <th>Código Postal</th>
             <td><?= $datosTarea[0]['codigo_postal'] ?></td>
+        </tr>
+        <tr>
+            <th>Provincias</th>
             <td><?= $datosTarea[0]['provincia'] ?></td>
+        </tr>
+        <tr>
+            <th>Estado</th>
             <td><?= $datosTarea[0]['estado'] ?></td>
+        </tr>
+        <tr>
+            <th>Fecha de Creacion</th>
             <td><?= $datosTarea[0]['fecha_creacion'] ?></td>
+        </tr>
+        <tr>
+            <th>Operario Encargado</th>
             <td><?= $datosTarea[0]['operario_encargado'] ?></td>
+        </tr>
+        <tr>
+            <th>Fecha de Realizacion</th>
             <td><?= $datosTarea[0]['fecha_realizacion'] ?></td>
+        </tr>
+        <tr>
+            <th>Anotaciones Anteriores</th>
             <td><?= $datosTarea[0]['anotaciones_ant'] ?></td>
+        </tr>
+        <tr>
+            <th>Anotaciones Posteriores</th>
             <td><?= $datosTarea[0]['anotaciones_pos'] ?></td>
-            <td><?= ($datosTarea[0]['fichero_resumen'] != "") ? "<a class='btn btn-info' href='/app/files/" . $datosTarea[0]['fichero_resumen'] . "' download='/app/files/" . $datosTarea[0]['fichero_resumen'] . "'>Descargar</a>" : "" ?> </td>
-            <td><?= ($datosTarea[0]['foto_trabajo'] != "") ? "<a class='btn btn-info' href='/app/files/" . $datosTarea[0]['foto_trabajo'] . "' download='/app/files/" . $datosTarea[0]['foto_trabajo'] . "'>Descargar</a>" : "" ?> </td>
+        </tr>
+        <tr>
+            <th>Fichero Resumen</th>
+            <td><?= ($datosTarea[0]['fichero_resumen'] != "") ? "<a class='btn btn-info' href='/app/files/" . $datosTarea[0]['fichero_resumen'] . "' download='" . $datosTarea[0]['fichero_resumen'] . "'>Descargar</a>" : "" ?> </td>
+        </tr>
+        <tr>
+            <th>Foto Trabajo</th>
+            <td><?= ($datosTarea[0]['foto_trabajo'] != "") ? "<a class='btn btn-info' href='/app/files/" . $datosTarea[0]['foto_trabajo'] . "' download='" . $datosTarea[0]['foto_trabajo'] . "'>Descargar</a>" : "" ?> </td>
         </tr>
     </table>
     <div>

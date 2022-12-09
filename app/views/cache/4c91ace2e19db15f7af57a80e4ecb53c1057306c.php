@@ -13,8 +13,9 @@
 <body>
 
     <?php $__env->startSection('cuerpo'); ?>
+    <h1>Añadir Tarea</h1>
+    <hr>
     <form class="row g-3 needs-validation" method="post" action="/app/controllers/validarFormTarea.php" enctype="multipart/form-data">
-    
     <div class="col-md-3">
         <label class="form-label">NIF o CIF</label>
         <input class="form-control" type="text" name="nif_cif" value="<?= ValorPost('nif_cif') ?>">

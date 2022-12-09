@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include "varios.php";
 include(MODELS_FOLDER.'Tarea.php');
 include(MODELS_FOLDER.'BD.php');

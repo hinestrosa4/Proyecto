@@ -99,6 +99,18 @@ class BD
     {
 
         $sql = "SELECT * FROM " . $tabla;
+        $resultado = $this->pdo->prepare($sql);
+        $resultado->execute();
+
+        $numFilas = $resultado->rowCount();
+
+        return $numFilas;
+    }
+
+    public function numFilasPendientes($tabla)
+    {
+
+        $sql = "SELECT * FROM $tabla WHERE estado='p'";
 
         $resultado = $this->pdo->prepare($sql);
         $resultado->execute();
@@ -127,8 +139,24 @@ class BD
     public function contenidoImpTabla($tabla, $empezarDesde, $tamanioPagina)
     {
 
-        $queryLimite = "SELECT id,nombre,apellidos,telefono,descripcion,correo,DATE_FORMAT(fecha_creacion, '%d/%m/%Y') AS fecha_creacion ,operario_encargado, DATE_FORMAT(fecha_realizacion, '%d/%m/%Y') AS fecha_realizacion
+        $queryLimite = "SELECT id,nombre,apellidos,telefono,descripcion,correo,estado,operario_encargado, DATE_FORMAT(fecha_realizacion, '%d/%m/%Y') AS fecha_realizacion
         FROM tareas ORDER BY fecha_realizacion " .  " LIMIT " . $empezarDesde . "," . $tamanioPagina;
+
+        $resultado = $this->pdo->prepare($queryLimite);
+        $resultado->execute();
+
+        /*Almacenamos el resultado de fetchAll en una variable*/
+        $datos = $resultado->fetchAll(PDO::FETCH_ASSOC);
+
+        return $datos;
+    }
+
+    public function tareasPendiente($tabla, $empezarDesde, $tamanioPagina)
+    {
+
+        $queryLimite = "SELECT id,nif_cif,nombre,apellidos,telefono,descripcion,correo,direccion,poblacion,
+        codigo_postal,provincia,estado,DATE_FORMAT(fecha_creacion, '%d/%m/%Y') AS fecha_creacion ,operario_encargado, DATE_FORMAT(fecha_realizacion, '%d/%m/%Y') AS fecha_realizacion,
+        anotaciones_ant,anotaciones_pos,fichero_resumen,foto_trabajo FROM tareas WHERE estado='p'  ORDER BY fecha_realizacion " .  " LIMIT " . $empezarDesde . "," . $tamanioPagina;
 
         $resultado = $this->pdo->prepare($queryLimite);
         $resultado->execute();
@@ -193,10 +221,10 @@ class BD
 
     public function completarTarea($id, $datos)
     {
-        $stmt = $this->pdo->prepare("UPDATE tareas SET anotaciones_ant = ?, anotaciones_pos = ?, fichero_resumen = ?, foto_trabajo = ? WHERE id = $id;");
+        $stmt = $this->pdo->prepare("UPDATE tareas SET estado = ?, anotaciones_ant = ?, anotaciones_pos = ?, fichero_resumen = ?, foto_trabajo = ? WHERE id = $id;");
 
         $resultado = $stmt->execute([
-            $datos['anotaciones_ant'], $datos['anotaciones_pos'], "Tarea_$id-" . $_FILES['fichero_resumen']['name'], "Tarea_$id-" . $_FILES['foto_trabajo']['name']
+            $datos['estado'], $datos['anotaciones_ant'], $datos['anotaciones_pos'], "Tarea_$id-" . $_FILES['fichero_resumen']['name'], "Tarea_$id-" . $_FILES['foto_trabajo']['name']
         ]); # Pasar en el mismo orden de los ?
 
         if ($resultado === TRUE)
