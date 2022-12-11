@@ -1,4 +1,5 @@
 <?php
+//Iniciamos la sesion
 session_start();
 include "varios.php";
 include CONTROLLERS_FOLDER."utilsFormulario.php";

@@ -1,5 +1,11 @@
 <?php
-//PENDIENTE
+/**
+ * creaSimpleTable
+ *
+ * @param  mixed $name nombre del elemento tabla
+ * @param  mixed $datos opciones de la tabla (contenido)
+ * @return void elemnento tabla en html
+ */
 function creaSimpleTable($name, $datos){
 
     $html = '<table class="table table-bordered name="' . $name . '" style=text-align:center;><tr><thead>';

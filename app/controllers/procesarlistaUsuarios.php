@@ -1,7 +1,7 @@
 <?php
+//Iniciamos la sesion
 session_start();
 include "varios.php";
-
 include(MODELS_FOLDER.'Usuario.php');
 include(MODELS_FOLDER.'BD.php');
 include(LIBRARIES_FOLDER.'creaTable.php');
@@ -18,7 +18,8 @@ $nombreCamposImp = ['nif', 'nombre', 'correo', 'telefono', 'isAdmin'];
 
 $nombresScreen = ["NIF", "Nombre", "Correo", "Teléfono", "Admin"];
 
-// Preparar
+//Iniciar paginacion
+//Indicamos numero de datos por pagina
 
 $tamanioPagina = 5;
 
@@ -42,11 +43,13 @@ if ($empezarDesde < 0) {
     $pagina = 1;
 }
 
+//Obtenemos todas los usuarios
 $numFilas = Usuario::getNumeroUsuarios();
 $totalPaginas = ceil($numFilas / $tamanioPagina);
 
 //echo $blade->render('listaTareas');
 
+//Muestra la vista de Usuarios
 echo $blade->render('listaUsuarios', [
     'usuarios' => Usuario::getTareasImpPorPagina($empezarDesde, $tamanioPagina),
     'empezarDesde' => $empezarDesde,

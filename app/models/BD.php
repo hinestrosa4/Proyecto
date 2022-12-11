@@ -38,6 +38,15 @@ class BD
         $this->pdo = new PDO($dsn, $usuario, $password);
     }
 
+    /**
+     * getListaSelect Devuelve la lista de provincias para crear un select cod->nombre
+     *
+     * @param  mixed $tabla nombre de la tabla
+     * @param  mixed $c_idx indices
+     * @param  mixed $c_value valores
+     * @param  mixed $condicion condicion para la sentencia sql
+     * @return void array asociativo con indice=>valor
+     */
     function getListaSelect($tabla, $c_idx, $c_value, $condicion = "")
     {
         $this->stmt = $this->pdo->prepare('SELECT ' . $c_idx . ',' . $c_value . ' FROM ' . $tabla . " " . $condicion);
@@ -49,7 +58,12 @@ class BD
         }
         return $lista;
     }
-
+    
+    /**
+     * catchTarea
+     *
+     * @return void añade la tarea
+     */
     function catchTarea()
     {
         $todocampos = $_POST;
@@ -71,7 +85,12 @@ class BD
 
         header('location:procesarlistaTareas.php');
     }
-
+    
+    /**
+     * catchUsuario
+     *
+     * @return void añade el usuario
+     */
     function catchUsuario()
     {
         $todocampos = $_POST;
@@ -93,9 +112,17 @@ class BD
 
         header('location:procesarlistaUsuarios.php');
     }
-
+    
+    /**
+     * insertarCampos Función genérica insertar en bases de datos
+     *
+     * @param  mixed $tabla nombre de la tabla
+     * @param  mixed $listaValues array de nombre de valores
+     * @param  mixed $campos array de contenido nuevo de campos
+     * @return void inserta en la bd
+     */
     function insertarCampos($tabla, $listaValues, $campos)
-    { //Función genérica insertar en bases de datos
+    { 
 
         $cadena = '';
         foreach ($campos as $id => $valor) {
@@ -110,16 +137,26 @@ class BD
         $resultado = $this->pdo->prepare($sql);
         $resultado->execute(array());
     }
-
+    
+    /**
+     * getCodTarea
+     *
+     * @return void devuelve los id de las tareas en orden
+     */
     function getCodTarea()
     {
         $stmt = $this->pdo->query("SELECT id FROM tareas GROUP BY id desc limit 1");
         return $stmt->fetch();
     }
-
+    
+    /**
+     * numFilas
+     *
+     * @param  mixed $tabla nombre de la tabla
+     * @return int de filas de la tabla indicada
+     */
     public function numFilas($tabla)
     {
-
         $sql = "SELECT * FROM " . $tabla;
         $resultado = $this->pdo->prepare($sql);
         $resultado->execute();
@@ -128,7 +165,13 @@ class BD
 
         return $numFilas;
     }
-
+    
+    /**
+     * numFilasPendientes
+     *
+     * @param  mixed $tabla nombre de la tabla
+     * @return int numero de filas de las tareas pendientes
+     */
     public function numFilasPendientes($tabla)
     {
 
@@ -141,7 +184,15 @@ class BD
 
         return $numFilas;
     }
-
+    
+    /**
+     * contenidoTabla
+     *
+     * @param  mixed $tabla nombre de la tabla
+     * @param  mixed $empezarDesde numero del primer contenido
+     * @param  mixed $tamanioPagina indicamos el tamaño de las paginas
+     * @return array devuelve el contenido del select
+     */
     public function contenidoTabla($tabla, $empezarDesde, $tamanioPagina)
     {
 
@@ -157,7 +208,15 @@ class BD
 
         return $datos;
     }
-
+    
+    /**
+     * contenidoImpTabla
+     *
+     * @param  mixed $tabla nombre de la tabla
+     * @param  mixed $empezarDesde numero del primer contenido
+     * @param  mixed $tamanioPagina tamaño de las paginas
+     * @return array devuelve el contenido del select
+     */
     public function contenidoImpTabla($tabla, $empezarDesde, $tamanioPagina)
     {
 
@@ -172,7 +231,15 @@ class BD
 
         return $datos;
     }
-
+    
+    /**
+     * contenidoImpTablaUsers
+     *
+     * @param  mixed $tabla nombre de la tabla
+     * @param  mixed $empezarDesde numero del primer contenido
+     * @param  mixed $tamanioPagina tamaño de las paginas
+     * @return array devuelve el contenido del select
+     */
     public function contenidoImpTablaUsers($tabla, $empezarDesde, $tamanioPagina)
     {
 
@@ -187,7 +254,15 @@ class BD
 
         return $datos;
     }
-
+    
+    /**
+     * tareasPendiente
+     *
+     * @param  mixed $tabla nombre de la tabla
+     * @param  mixed $empezarDesde numero del primer contenido
+     * @param  mixed $tamanioPagina tamaño de las paginas
+     * @return array devuelve el contenido del select
+     */
     public function tareasPendiente($tabla, $empezarDesde, $tamanioPagina)
     {
 
@@ -203,14 +278,27 @@ class BD
 
         return $datos;
     }
-
+    
+    /**
+     * checkUser
+     *
+     * @param  mixed $correo string correo
+     * @param  mixed $password string clave
+     * @return array devuelve contenido de los usuarios
+     */
     public function checkUser($correo, $password)
     {
 
         $stmt = $this->pdo->query("SELECT * FROM usuarios where correo='$correo' and clave='$password'");
         return $stmt->fetch();
     }
-
+    
+    /**
+     * showTarea
+     *
+     * @param  mixed $id string id de la tarea
+     * @return array contenido de la tarea
+     */
     public function showTarea($id)
     {
         $queryLimite = "SELECT * FROM tareas where id=$id";
@@ -223,7 +311,13 @@ class BD
 
         return $datos;
     }
-
+    
+    /**
+     * showUser
+     *
+     * @param  mixed $id string id del usuario
+     * @return array contenido del usuario
+     */
     public function showUser($id)
     {
         $queryLimite = "SELECT * FROM usuarios where nif='$id'";
@@ -235,27 +329,53 @@ class BD
 
         return $datos;
     }
-
+    
+    /**
+     * showCampo
+     *
+     * @param  mixed $id string id de la tarea
+     * @param  mixed $campo contenido de la tabla tareas
+     * @return void contenido de las tareas con campos indicados
+     */
     public function showCampo($id, $campo)
     {
         $stmt = $this->pdo->query("SELECT $campo FROM tareas where id=$id");
         return $stmt->fetch();
     }
-
+    
+    /**
+     * deleteTarea
+     *
+     * @param  mixed $id string id de la tarea
+     * @return void borra la tarea
+     */
     public function deleteTarea($id)
     {
 
         $stmt = $this->pdo->query("DELETE from tareas WHERE id=$id");
         $stmt->execute();
     }
-
+    
+    /**
+     * deleteUsuario
+     *
+     * @param  mixed $id 
+     * @return void borra un usuario
+     */
     public function deleteUsuario($id)
     {
 
         $stmt = $this->pdo->query("DELETE from usuarios WHERE nif='$id';");
         $stmt->execute();
     }
-
+    
+    /**
+     * modTarea
+     *
+     * @param  mixed $id id de la tarea
+     * @param  mixed $datos datos de la tarea
+     * @return boolean modificar tarea
+     */
     public function modTarea($id, $datos)
     {
         $fechaActual = date('Y-m-d');
@@ -274,7 +394,14 @@ class BD
         else
             return false;
     }
-
+    
+    /**
+     * modUser
+     *
+     * @param  mixed $id id del usuario
+     * @param  mixed $datos datos del usuario
+     * @return boolean modifica el usuario
+     */
     public function modUser($id, $datos)
     {
 
@@ -287,7 +414,14 @@ class BD
         else
             return false;
     }
-
+    
+    /**
+     * completarTarea
+     *
+     * @param  mixed $id id de la tarea
+     * @param  mixed $datos datos de la tarea
+     * @return boolean actualiza la tarea
+     */
     public function completarTarea($id, $datos)
     {
         $stmt = $this->pdo->prepare("UPDATE tareas SET estado = ?, anotaciones_ant = ?, anotaciones_pos = ?, fichero_resumen = ?, foto_trabajo = ? WHERE id = $id;");
@@ -301,7 +435,13 @@ class BD
         else
             return false;
     }
-
+    
+    /**
+     * resultadosPorPagina
+     *
+     * @param  mixed $condicion condicion where
+     * @return array datos de tarea 
+     */
     public function resultadosPorPagina($condicion)
     {
 

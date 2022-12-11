@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * creaTable
+ *
+ * @param  mixed $name nombre del elemento table
+ * @param  mixed $nombreCampos array de campos sacados de la BD
+ * @param  mixed $nombresScreen array con los campos para la cabecera de la tabla
+ * @param  mixed $listaValores array con valores que vamos a introcudirle
+ * @param  mixed $pk primary key de la tabla
+ * @return void tabla en html
+ */
 function creaTable($name, $nombreCampos, $nombresScreen, $listaValores, $pk)
 {
 

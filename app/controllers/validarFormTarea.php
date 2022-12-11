@@ -1,28 +1,29 @@
 <?php
+//Iniciamos la sesion
 session_start();
 include "varios.php";
-include CONTROLLERS_FOLDER."utilsFormulario.php";
-include MODELS_FOLDER."BD.php";
-//include '../controllers/queryProvincia.php';
-$bd = BD::getInstance();
-include LIBRARIES_FOLDER."creaSelect.php";
-include MODELS_FOLDER."Provincia.php";
-include MODELS_FOLDER."Usuario.php";
+include CONTROLLERS_FOLDER . "utilsFormulario.php";
+include MODELS_FOLDER . "BD.php";
+include LIBRARIES_FOLDER . "creaSelect.php";
+include MODELS_FOLDER . "Provincia.php";
+include MODELS_FOLDER . "Usuario.php";
 
 //Librerias
-include LIBRARIES_FOLDER."validarDNI.php";
-include LIBRARIES_FOLDER."validarTelefono.php";
-include LIBRARIES_FOLDER."validarCodigoPostal.php";
-include LIBRARIES_FOLDER."validarCorreo.php";
-include LIBRARIES_FOLDER."validarFechaRealizacion.php";
-include LIBRARIES_FOLDER."validarCIF.php";
-include LIBRARIES_FOLDER."uploadFile.php";
-include LIBRARIES_FOLDER."validarStringyNumber.php";
+include LIBRARIES_FOLDER . "validarDNI.php";
+include LIBRARIES_FOLDER . "validarTelefono.php";
+include LIBRARIES_FOLDER . "validarCodigoPostal.php";
+include LIBRARIES_FOLDER . "validarCorreo.php";
+include LIBRARIES_FOLDER . "validarFechaRealizacion.php";
+include LIBRARIES_FOLDER . "validarCIF.php";
+include LIBRARIES_FOLDER . "uploadFile.php";
+include LIBRARIES_FOLDER . "validarStringyNumber.php";
 
+$bd = BD::getInstance();
 $hayError = FALSE;
 $errores = [];
 
-if (!$_POST) { // Si no han enviado el fomulario
+//Si no enviamos datos, nos mostrará la vista de añadir formulario
+if (!$_POST) {
     echo $blade->render('formularioTarea');
 } else {
 
@@ -103,6 +104,7 @@ if (!$_POST) { // Si no han enviado el fomulario
     if ($hayError) {
         echo $blade->render('formularioTarea');
     } else {
+        //Si todo ha ido bien, añadimos la tarea
         $bd->catchTarea();
     }
 }

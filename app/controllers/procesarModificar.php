@@ -1,10 +1,9 @@
 <?php
+//Iniciamos la sesion
 session_start();
 include "varios.php";
 include CONTROLLERS_FOLDER."utilsFormulario.php";
 include MODELS_FOLDER."BD.php";
-//include '../controllers/queryProvincia.php';
-$bd = BD::getInstance();
 include LIBRARIES_FOLDER."creaSelect.php";
 include MODELS_FOLDER."Provincia.php";
 include MODELS_FOLDER."Usuario.php";
@@ -19,6 +18,7 @@ include LIBRARIES_FOLDER."validarFechaRealizacion.php";
 include LIBRARIES_FOLDER."validarCIF.php";
 include LIBRARIES_FOLDER."uploadFile.php";
 
+$bd = BD::getInstance();
 $id = $_GET['id'];
 $hayError = FALSE;
 $errores = [];
@@ -107,12 +107,14 @@ if (!$_POST) { // Si no han enviado el fomulario
     /*Validar Foto Trabajo*/
     uploadFile("foto_trabajo", $bd->getCodTarea()[0] + 1);
 
+    //Si hay error volvemos a indicar la vista
     if ($hayError) {
         echo $blade->render('modificarTarea', [
             'tareas' => Tarea::getTareas($id),
             'id'=>$id,
         ]);
     } else {
+        //Si no hay error, volvemos a la vista de listar Tarea
         $bd->modTarea($id, $_POST);
         header('Location: procesarListaTareas.php');
     } 

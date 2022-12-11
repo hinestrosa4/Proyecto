@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * uploadFile
+ *
+ * @param  mixed $fich nombre del fichero
+ * @param  mixed $id id de la tarea
+ * @return void 
+ */
 function uploadFile($fich, $id)
 {
     $destino = __DIR__ . "/../files/";

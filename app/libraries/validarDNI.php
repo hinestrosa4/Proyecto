@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * validarDni
+ *
+ * @param  mixed $dni string dni
+ * @return void true si es correcto y false si es incorrecto
+ */
 function validarDni($dni)
 {
     $lista = "TRWAGMYFPDXBNJZSQVHLCKE";

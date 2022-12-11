@@ -1,4 +1,5 @@
 <?php
+//Iniciamos la sesion
 session_start();
 include "varios.php";
 include CONTROLLERS_FOLDER . 'utilsFormulario.php';
@@ -10,6 +11,7 @@ $bd = BD::getInstance();
 $id = $_GET['id'];
 $detalles = $bd->showTarea($id);
 
+//Si no envia datos, volvemos a mostrar la pantalla
 if (!$_POST) {
 
     echo $blade->render('completarTarea', [
@@ -17,14 +19,14 @@ if (!$_POST) {
         'detalles' => $detalles,
     ]);
 } else {
-    var_dump($_POST);
 
+    //Si envia datos, update de la tabla con los nuevos datos
     $bd->completarTarea($id, $_POST);
 
-    /*Validar Fichero Resumen*/
+    //Validar Fichero Resumen
     uploadFile("fichero_resumen", $id);
 
-    /*Validar Foto Trabajo*/
+    //Validar Foto Trabajo
     uploadFile("foto_trabajo", $id);
 
 header('Location: procesarlistaTareas.php');

@@ -1,7 +1,7 @@
 <?php
+//Iniciamos la sesion
 session_start();
 include "varios.php";
-
 include(MODELS_FOLDER.'Tarea.php');
 include(MODELS_FOLDER.'BD.php');
 include(LIBRARIES_FOLDER.'creaTable.php');
@@ -21,7 +21,8 @@ $nombreCamposImp = [
 $nombresScreen = ["Identificador", "Nombre", "Apellidos", "Teléfono", "Correo", "Estado",
 "Operario Encargado", "Fecha Realización"];
 
-// Preparar
+//Iniciar paginacion
+//Indicamos numero de datos por pagina
 
 $tamanioPagina = 5;
 
@@ -46,11 +47,11 @@ if ($empezarDesde < 0) {
     $pagina = 1;
 }
 
+//Obtenemos todas las tareas resultantes
 $numFilas = Tarea::getNumeroTareas();
 $totalPaginas = ceil($numFilas / $tamanioPagina);
 
-//echo $blade->render('listaTareas');
-
+//Muestra la vista de Tareas
 echo $blade->render('listaTareas', [
     'tareas' => Tarea::getTareasImpPorPagina($empezarDesde, $tamanioPagina),
     'empezarDesde' => $empezarDesde,
