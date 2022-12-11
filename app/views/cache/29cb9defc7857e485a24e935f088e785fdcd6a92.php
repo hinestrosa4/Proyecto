@@ -15,7 +15,7 @@
         <ul>
             <a class="navbar-brand" href="/app/controllers/procesarlistaTareas.php">Ver Lista Tareas</a>
             <a class="navbar-brand" href="/app/controllers/procesarlistaTareasPendientes.php">Ver Tareas Pendientes</a>
-            <a class="navbar-brand" href="#">Filtros</a>
+            <a class="navbar-brand" href="/app/controllers/procesarFormFiltrado.php">Filtros</a>
             <?php
             //echo $_SESSION["admin"];
             if ($_SESSION["rol"] == "admin") {

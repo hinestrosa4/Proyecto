@@ -70,7 +70,7 @@ class BD
         Tarea::addTarea($a_campos, $names2);
 
         header('location:procesarlistaTareas.php');
-     }
+    }
 
     function catchUsuario()
     {
@@ -106,7 +106,7 @@ class BD
         }
 
         $sql = "INSERT INTO " . $tabla . "(" . $listaValues . ") VALUES(" . $cadena . ")";
-echo $sql;
+        echo $sql;
         $resultado = $this->pdo->prepare($sql);
         $resultado->execute(array());
     }
@@ -277,7 +277,7 @@ echo $sql;
 
     public function modUser($id, $datos)
     {
-        
+
         $stmt = $this->pdo->prepare("UPDATE usuarios SET correo = ?, clave = ?  WHERE nif = '$id';");
 
         $resultado = $stmt->execute([$datos['correo'], $datos['clave']]); # Pasar en el mismo orden de los ?
@@ -300,5 +300,21 @@ echo $sql;
             return true;
         else
             return false;
+    }
+
+    public function resultadosPorPagina($condicion)
+    {
+
+        $queryLimite = "SELECT id,nif_cif,nombre,apellidos,telefono,descripcion,correo,direccion,poblacion,
+        codigo_postal,provincia,estado,DATE_FORMAT(fecha_creacion, '%d/%m/%Y') AS fecha_creacion ,operario_encargado, DATE_FORMAT(fecha_realizacion, '%d/%m/%Y') AS fecha_realizacion,
+        anotaciones_ant,anotaciones_pos,fichero_resumen,foto_trabajo FROM tareas " . $condicion . " ORDER BY fecha_realizacion";
+
+        $resultado = $this->pdo->prepare($queryLimite);
+        $resultado->execute();
+
+        //Almacenamos el resultado de fetchAll en una variable/
+        $datos = $resultado->fetchAll(PDO::FETCH_ASSOC);
+
+        return $datos;
     }
 }

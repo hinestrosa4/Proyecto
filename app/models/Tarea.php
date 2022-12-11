@@ -45,4 +45,9 @@ class Tarea
     {
         return BD::getInstance()->showTarea($id);
     }
+
+    static function buscarTarea($consulta)
+    {
+        return BD::getInstance()->resultadosPorPagina($consulta);
+    }
 }
