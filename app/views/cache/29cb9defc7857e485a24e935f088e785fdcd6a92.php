@@ -22,7 +22,8 @@
 
             ?>
                 <a class="navbar-brand" href="/app/controllers/validarFormTarea.php">Añadir Incidencia/Tarea</a>
-                <a class="navbar-brand" href="#">Usuarios</a>
+                <a class="navbar-brand" href="/app/controllers/procesarlistaUsuarios.php">Usuarios</a>
+                <a class="navbar-brand" href="/app/controllers/procesarCrearUsuario.php">Crear Usuario</a>
             <?php
             }
 

@@ -5,6 +5,6 @@ if ($_SESSION['rol'] == "admin") {
     include(MODELS_FOLDER . 'BD.php');
 
     $bd = BD::getInstance();
-    $bd->deleteTarea($_GET['id']);
+    $bd->deleteUsuario($_GET['nif']);
 }
-header('Location: procesarlistaTareas.php');
+header('Location: procesarlistaUsuarios.php');

@@ -15,7 +15,7 @@
     @section('cuerpo')
     <h1 style="margin-left: 50px;">Tareas Pendientes</h1>
     <hr>
-    <?= creaTable('listaTareas', $nombreCamposImp, $nombresScreen, Tarea::getTareasPendientes($empezarDesde, $tamanioPagina)) ?>
+    <?= creaTable('listaTareas', $nombreCamposImp, $nombresScreen, Tarea::getTareasPendientes($empezarDesde, $tamanioPagina),"id") ?>
 
     <p><b>Página Actual:</b> <?= $pagina ?></p>
 

@@ -16,7 +16,7 @@
     <!--<p><?= $usuario ?></p>-->
     <h1 style="margin-left: 50px;margin-bottom:20px;">Lista de Tareas</h1>
     <hr>
-    <?= creaTable('listaTareas', $nombreCamposImp, $nombresScreen, Tarea::getTareasImpPorPagina($empezarDesde, $tamanioPagina)) ?>
+    <?= creaTable('listaTareas', $nombreCamposImp, $nombresScreen, Tarea::getTareasImpPorPagina($empezarDesde, $tamanioPagina),"id") ?>
 
     <p><b>Página Actual:</b> <?= $pagina ?></p>
 

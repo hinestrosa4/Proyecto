@@ -69,7 +69,29 @@ class BD
 
         Tarea::addTarea($a_campos, $names2);
 
-        echo "<a href='../controllers/validarFormTarea.php'>Volver al formulario</a>";
+        header('location:procesarlistaTareas.php');
+     }
+
+    function catchUsuario()
+    {
+        $todocampos = $_POST;
+        var_dump($todocampos);
+        $campos = "";
+        $names = "";
+
+        foreach ($todocampos as $name => $camp) {
+            $campos  .= $camp . ',';
+            $names .= $name . ',';
+        }
+
+        $campos2 = substr($campos, 0, -1);
+        $names2 = substr($names, 0, -1);
+        $a_campos = explode(",", $campos2);
+
+
+        Usuario::addUsuario($a_campos, $names2);
+
+        header('location:procesarlistaUsuarios.php');
     }
 
     function insertarCampos($tabla, $listaValues, $campos)
@@ -84,7 +106,7 @@ class BD
         }
 
         $sql = "INSERT INTO " . $tabla . "(" . $listaValues . ") VALUES(" . $cadena . ")";
-
+echo $sql;
         $resultado = $this->pdo->prepare($sql);
         $resultado->execute(array());
     }
@@ -151,6 +173,21 @@ class BD
         return $datos;
     }
 
+    public function contenidoImpTablaUsers($tabla, $empezarDesde, $tamanioPagina)
+    {
+
+        $queryLimite = "SELECT nif,nombre,correo,telefono,isAdmin
+        FROM usuarios ORDER BY nif " .  " LIMIT " . $empezarDesde . "," . $tamanioPagina;
+
+        $resultado = $this->pdo->prepare($queryLimite);
+        $resultado->execute();
+
+        /*Almacenamos el resultado de fetchAll en una variable*/
+        $datos = $resultado->fetchAll(PDO::FETCH_ASSOC);
+
+        return $datos;
+    }
+
     public function tareasPendiente($tabla, $empezarDesde, $tamanioPagina)
     {
 
@@ -187,6 +224,18 @@ class BD
         return $datos;
     }
 
+    public function showUser($id)
+    {
+        $queryLimite = "SELECT * FROM usuarios where nif='$id'";
+        $resultado = $this->pdo->prepare($queryLimite);
+        $resultado->execute();
+
+        /*Almacenamos el resultado de fetchAll en una variable*/
+        $datos = $resultado->fetchAll(PDO::FETCH_ASSOC);
+
+        return $datos;
+    }
+
     public function showCampo($id, $campo)
     {
         $stmt = $this->pdo->query("SELECT $campo FROM tareas where id=$id");
@@ -197,6 +246,13 @@ class BD
     {
 
         $stmt = $this->pdo->query("DELETE from tareas WHERE id=$id");
+        $stmt->execute();
+    }
+
+    public function deleteUsuario($id)
+    {
+
+        $stmt = $this->pdo->query("DELETE from usuarios WHERE nif='$id';");
         $stmt->execute();
     }
 
@@ -212,6 +268,19 @@ class BD
             $datos['direccion'], $datos['poblacion'], $datos['codigo_postal'], $datos['provincia'], $datos['estado'], $fechaActual, $datos['operario_encargado'],
             $datos['fecha_realizacion'], $datos['anotaciones_ant'], $datos['anotaciones_pos'], "app/files/Tarea_$id-" . $_FILES['fichero_resumen']['name'], "app/files/Tarea_$id-" . $_FILES['foto_trabajo']['name']
         ]); # Pasar en el mismo orden de los ?
+
+        if ($resultado === TRUE)
+            return true;
+        else
+            return false;
+    }
+
+    public function modUser($id, $datos)
+    {
+        
+        $stmt = $this->pdo->prepare("UPDATE usuarios SET correo = ?, clave = ?  WHERE nif = '$id';");
+
+        $resultado = $stmt->execute([$datos['correo'], $datos['clave']]); # Pasar en el mismo orden de los ?
 
         if ($resultado === TRUE)
             return true;

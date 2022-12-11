@@ -42,12 +42,24 @@ if (!$_POST) { // Si no han enviado el fomulario
         $errores['nombre'] = 'El nombre no debe estar vacio';
         $hayError = TRUE;
     }
+    if (!validarStringyNumber($_POST["nombre"])) {
+        $errores['nombre'] = 'Formato incorrecto o se encuentra vacio';
+        $hayError = TRUE;
+    }
     if (empty($apellidos)) {
         $errores['apellidos'] = 'Los apellidos no debe estar vacio';
         $hayError = TRUE;
     }
+    if (!validarStringyNumber($_POST["apellidos"])) {
+        $errores['apellidos'] = 'Formato incorrecto o se encuentra vacio';
+        $hayError = TRUE;
+    }
     if (empty($descripcion)) {
         $errores['descripcion'] = 'La descripción no debe estar vacia';
+        $hayError = TRUE;
+    }
+    if (!validarStringyNumber($_POST["descripcion"])) {
+        $errores['descripcion'] = 'Formato incorrecto o se encuentra vacio';
         $hayError = TRUE;
     }
     /*Validar CIF o NIF*/

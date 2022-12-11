@@ -3,15 +3,14 @@ session_start();
 if ($_SESSION['rol'] == "admin") {
 include "varios.php";
 
-include LIBRARIES_FOLDER.'creaSimpleTable.php';
 include MODELS_FOLDER.'BD.php';
 
 $bd = BD::getInstance();
 
-$detalles = $bd->showTarea($_GET['id']);
+$detalles = $bd->showUser($_GET['nif']);
 
-echo $blade->render('confirmarBorrar', [
+echo $blade->render('confirmarBorrarUsuario', [
     'detalles'=>$detalles,
 ]);
 }else
-header('Location: procesarlistaTareas.php');
+header('Location: procesarlistaUsuarios.php');

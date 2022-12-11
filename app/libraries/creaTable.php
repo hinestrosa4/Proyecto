@@ -1,6 +1,6 @@
 <?php
 
-function creaTable($name, $nombreCampos, $nombresScreen, $listaValores)
+function creaTable($name, $nombreCampos, $nombresScreen, $listaValores, $pk)
 {
 
     $html = '<table class="table table-hover" name="' . $name . '" style=text-align:center;><tr><thead>';
@@ -8,6 +8,7 @@ function creaTable($name, $nombreCampos, $nombresScreen, $listaValores)
     foreach ($nombresScreen as $id => $value) :
 
         $html .= '<th>' . $nombresScreen[$id] . '</th>';
+
 
     endforeach;
 
@@ -22,17 +23,23 @@ function creaTable($name, $nombreCampos, $nombresScreen, $listaValores)
             $html .= '<td>' . $valor[$nombreCampos[$id]] . '</td>';
 
         endforeach;
+        $html.="<td>";
+        if ($name != "listaUsuarios") {
+            $html .= "<a class=" . "'btn btn-primary'" . "href=../controllers/procesarVerDetalles.php?id=$valor[$pk] name=$valor[$pk]>Ver detalles</a>";
+        }
+        if ($_SESSION["rol"] == "admin" && $name == "listaUsuarios") {
+            $html .= " <a class=" . "'btn btn-warning'" . "href=../controllers/procesarModificarUsuario.php?nif=$valor[$pk] name=$valor[$pk]>Modificar</a>";
+            $html .= " <a class=" . "'btn btn-danger'" . "href=../controllers/procesarConfirmarBorrarUsuario.php?nif=$valor[$pk] name=$valor[$pk]>Borrar</a>";
+        }
 
-        $html .= "<td><a class=" . "'btn btn-primary'" . "href=../controllers/procesarVerDetalles.php?id=$valor[id] name=$valor[id]>Ver detalles</a>";
-
-        if ($_SESSION["rol"] == "admin") {
-            $html .= " <a class=" . "'btn btn-warning'" . "href=../controllers/procesarModificar.php?id=$valor[id] name=$valor[id]>Modificar</a>";
-            $html .= " <a class=" . "'btn btn-danger'" . "href=../controllers/procesarConfirmarBorrar.php?id=$valor[id] name=$valor[id]>Borrar</a>";
+        if ($_SESSION["rol"] == "admin" && $name != "listaUsuarios") {
+            $html .= " <a class=" . "'btn btn-warning'" . "href=../controllers/procesarModificar.php?id=$valor[$pk] name=$valor[$pk]>Modificar</a>";
+            $html .= " <a class=" . "'btn btn-danger'" . "href=../controllers/procesarConfirmarBorrar.php?id=$valor[$pk] name=$valor[$pk]>Borrar</a>";
         }
 
         if ($_SESSION["rol"] == "operario") {
 
-            $html .= " <a class=" . "'btn btn-success'" . "href=../controllers/procesarCompletarTarea.php?id=$valor[id] name=$valor[id]>Completar</a></td>";
+            $html .= " <a class=" . "'btn btn-success'" . "href=../controllers/procesarCompletarTarea.php?id=$valor[$pk] name=$valor[$pk]>Completar</a></td>";
         }
         $html .= '</tr>';
 

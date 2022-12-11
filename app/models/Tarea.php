@@ -43,7 +43,6 @@ class Tarea
 
     static function getTareas($id)
     {
-
         return BD::getInstance()->showTarea($id);
     }
 }

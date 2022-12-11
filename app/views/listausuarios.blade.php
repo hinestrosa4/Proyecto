@@ -11,11 +11,12 @@
 </head>
 
 <body>
-
-    <?php $__env->startSection('cuerpo'); ?>
-    <h1 style="margin-left: 50px;">Tareas Pendientes</h1>
+    @extends('_template')
+    @section('cuerpo')
+    <!--<p><?= $usuario ?></p>-->
+    <h1 style="margin-left: 50px;margin-bottom:20px;">Lista de Ususarios</h1>
     <hr>
-    <?= creaTable('listaTareas', $nombreCamposImp, $nombresScreen, Tarea::getTareasPendientes($empezarDesde, $tamanioPagina),"id") ?>
+    <?= creaTable('listaUsuarios', $nombreCamposImp, $nombresScreen, Usuario::getTareasImpPorPagina($empezarDesde, $tamanioPagina),"nif") ?>
 
     <p><b>Página Actual:</b> <?= $pagina ?></p>
 
@@ -32,10 +33,10 @@
         <li class=page-item><a class=page-link href='?pagina=<?= $pagina + 1 ?>'>>></a>
         <li class=page-item><a class=page-link href='?pagina=<?= $totalPaginas ?>'>Última</a>
     </ul>
-<form action="procesarlistaTareasPendientes.php">
-        Indique una página: <input type=text value= "1" name=pagina> <button class="btn btn-primary">Ir a la página</button>
-        </form>
-        <?php $__env->stopSection(); ?>
-    </body>
+    <form action="/app/controllers/procesarlistaUsuarios.php" method="get">
+        Indique una página: <input type=text value="1" name="pagina"> <button class="btn btn-primary">Ir a la página</button>
+    </form>
+    @endsection
+</body>
+
 </html>
-<?php echo $__env->make('_template', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\Hinestrosa\Desktop\DAW\2\PHP\Proyectos\Proyecto\app\views/listaTareasPendientes.blade.php ENDPATH**/ ?>
